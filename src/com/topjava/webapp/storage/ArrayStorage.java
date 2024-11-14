@@ -3,7 +3,6 @@ package com.topjava.webapp.storage;
 import com.topjava.webapp.model.Resume;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * Array based storage for Resumes
@@ -13,55 +12,50 @@ public class ArrayStorage {
     private Resume[] storage = new Resume[CAPACITY];
     private int size;
 
-    public void update(Resume resume) {
-        String result = isExist(resume.getUuid()) ? resume + " UPDATED" : resume + " NOT FOUND";
-        System.out.println(result);
-    }
-
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
+    public int getSize() {
+        return size;
     }
 
     public void save(Resume resume) {
-        if (isExist(resume.getUuid())) {
-            System.out.println(resume.getUuid() + " ALREADY EXISTS");
-            return;
-        }
         if (isFull()) {
             System.out.println("ERROR: Storage is Full");
             return;
         }
-        if (!isExist(resume.getUuid()) && !isFull()) {
+        if (getIndex(resume.getUuid()) >= 0) {
+            System.out.println(resume.getUuid() + " ALREADY EXISTS");
+        } else {
             storage[size] = resume;
             size++;
         }
     }
 
     public Resume get(String uuid) {
-        if (isExist(uuid)) {
-            for (Resume resume : getAll()) {
-                if (Objects.equals(resume.getUuid(), uuid)) {
-                    return resume;
-                }
-            }
+        if (getIndex(uuid) >= 0) {
+            return storage[getIndex(uuid)];
         }
         System.out.println(uuid + " NOT FOUND");
         return null;
     }
 
+    public void update(Resume resume) {
+        String result = getIndex(resume.getUuid()) >= 0 ? resume + " UPDATED" : resume + " NOT FOUND";
+        System.out.println(result);
+    }
+
     public void delete(String uuid) {
-        if (isExist(uuid)) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].getUuid().equals(uuid)) {
-                    System.arraycopy(storage, i + 1, storage, i, size - 1 - i);
-                    storage[size - 1] = null;
-                    size--;
-                }
-            }
-        } else {
-            System.out.println(uuid + " NOT FOUND");
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
+            storage[size - 1] = null;
+            size--;
+            return;
         }
+        System.out.println(uuid + " NOT FOUND");
+    }
+
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
     }
 
     /**
@@ -71,20 +65,16 @@ public class ArrayStorage {
         return Arrays.copyOf(storage, size);
     }
 
-    public int size() {
-        return size;
+    private boolean isFull() {
+        return size == CAPACITY;
     }
 
-    public boolean isExist(String uuid) {
-        for (Resume resume : getAll()) {
-            if (Objects.equals(resume.getUuid(), uuid)) {
-                return true;
+    private int getIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(uuid)) {
+                return i;
             }
         }
-        return false;
-    }
-
-    public boolean isFull() {
-        return size == CAPACITY;
+        return -1;
     }
 }
