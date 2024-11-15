@@ -7,14 +7,7 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private final int CAPACITY = 10000;
-    private Resume[] storage = new Resume[CAPACITY];
-    private int size;
-
-    public int getSize() {
-        return size;
-    }
+public class ArrayStorage extends AbstractArrayStorage {
 
     public void save(Resume resume) {
         if (isFull()) {
@@ -29,17 +22,14 @@ public class ArrayStorage {
         }
     }
 
-    public Resume get(String uuid) {
-        if (getIndex(uuid) >= 0) {
-            return storage[getIndex(uuid)];
-        }
-        System.out.println(uuid + " NOT FOUND");
-        return null;
-    }
-
     public void update(Resume resume) {
-        String result = getIndex(resume.getUuid()) >= 0 ? resume + " UPDATED" : resume + " NOT FOUND";
-        System.out.println(result);
+        int index = getIndex(resume.getUuid());
+        if (index >= 0) {
+            storage[index] = resume;
+            System.out.println(resume + " UPDATED");
+        } else {
+            System.out.println(resume + " NOT FOUND");
+        }
     }
 
     public void delete(String uuid) {
@@ -69,7 +59,7 @@ public class ArrayStorage {
         return size == CAPACITY;
     }
 
-    private int getIndex(String uuid) {
+    protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
