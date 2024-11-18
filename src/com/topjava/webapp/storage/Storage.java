@@ -6,13 +6,11 @@ public interface Storage {
 
     int getSize();
 
-    void save(Resume resume);
-
-    Resume get(String uuid);
+    void delete(String uuid);
 
     void update(Resume resume);
 
-    void delete(String uuid);
+    Resume get(String uuid);
 
     void clear();
 

@@ -1,13 +1,13 @@
 package com.topjava.webapp;
 
 import com.topjava.webapp.model.Resume;
-import com.topjava.webapp.storage.ArrayStorage;
+import com.topjava.webapp.storage.SortedArrayStorage;
 
 /**
  * Test for your com.topjava.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
@@ -19,13 +19,17 @@ public class MainTestArrayStorage {
         Resume r4 = new Resume();
         r4.setUuid("uuid4");
 
-        ARRAY_STORAGE.save(r1);
         ARRAY_STORAGE.save(r2);
+        ARRAY_STORAGE.save(r1);
+        ARRAY_STORAGE.save(r4);
         ARRAY_STORAGE.save(r3);
 
-        System.out.printf("Get r1: %s%n%n", ARRAY_STORAGE.get(r1.getUuid()));
-        System.out.printf("Size: %d%n%n", ARRAY_STORAGE.getSize());
+        System.out.printf("Get r1: %s%n", ARRAY_STORAGE.get(r1.getUuid()));
+        System.out.printf("Get r2: %s%n", ARRAY_STORAGE.get(r2.getUuid()));
+        System.out.printf("Get r3: %s%n", ARRAY_STORAGE.get(r3.getUuid()));
+        System.out.printf("Get r4: %s%n", ARRAY_STORAGE.get(r4.getUuid()));
         System.out.printf("Get dummy: %s%n%n", ARRAY_STORAGE.get("dummy"));
+        System.out.printf("Size: %d%n%n", ARRAY_STORAGE.getSize());
 
         ARRAY_STORAGE.update(r1);
         ARRAY_STORAGE.update(r2);
@@ -33,7 +37,7 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.update(r4);
 
         printAll();
-        ARRAY_STORAGE.delete(r1.getUuid());
+        ARRAY_STORAGE.delete(r4.getUuid());
         printAll();
         ARRAY_STORAGE.clear();
         printAll();
