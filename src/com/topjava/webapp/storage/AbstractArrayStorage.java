@@ -22,7 +22,8 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println(uuid + "NOT FOUND");
         } else {
             System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
-            storage[--size] = null;
+            storage[size] = null;
+            size--;
         }
     }
 
