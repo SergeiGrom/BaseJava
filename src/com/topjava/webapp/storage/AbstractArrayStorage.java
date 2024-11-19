@@ -16,17 +16,6 @@ public abstract class AbstractArrayStorage implements Storage {
         return size;
     }
 
-    public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            System.out.println(uuid + "NOT FOUND");
-        } else {
-            System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
-            storage[size] = null;
-            size--;
-        }
-    }
-
     public void update(Resume resume) {
         String uuid = resume.getUuid();
         int index = getIndex(uuid);
@@ -56,24 +45,34 @@ public abstract class AbstractArrayStorage implements Storage {
         return Arrays.copyOf(storage, size);
     }
 
-    protected boolean canSave(Resume resume) {
+    public final void save(Resume resume) {
         String uuid = resume.getUuid();
-        if (getIndex(uuid) >= 0) {
-            System.out.println(uuid + " ALREADY EXISTS");
-            return false;
-        }
-        if (isFull()) {
+        int index = getIndex(uuid);
+        if (size == CAPACITY) {
             System.out.println("ERROR: STORAGE IS FULL");
-            return false;
+            return;
         }
-        return true;
+        if (index >= 0) {
+            System.out.println(uuid + " ALREADY EXISTS");
+        } else {
+            inputResume(index, resume);
+            size++;
+        }
     }
 
-    protected boolean isFull() {
-        return size == CAPACITY;
+     public final void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (index < 0) {
+            System.out.println(uuid + "NOT FOUND");
+        } else {
+            deleteResume(index);
+            size--;
+        }
     }
 
-    protected abstract void save(Resume resume);
+    protected abstract void deleteResume(int index);
+
+    protected abstract void inputResume(int index, Resume resume);
 
     protected abstract int getIndex(String uuid);
 }

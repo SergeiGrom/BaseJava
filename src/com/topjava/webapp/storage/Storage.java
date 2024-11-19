@@ -6,8 +6,6 @@ public interface Storage {
 
     int getSize();
 
-    void delete(String uuid);
-
     void update(Resume resume);
 
     Resume get(String uuid);
@@ -15,4 +13,8 @@ public interface Storage {
     void clear();
 
     Resume[] getAll();
+
+    void save(Resume resume);
+
+    void delete(String uuid);
 }

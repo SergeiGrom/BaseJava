@@ -6,13 +6,17 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage {
 
-    public void save(Resume resume) {
-        if (canSave(resume)) {
-            int index = Math.abs(getIndex(resume.getUuid()) + 1);
-            System.arraycopy(storage, index, storage, index + 1, size - index);
-            storage[index] = resume;
-            size++;
-        }
+    @Override
+    protected void deleteResume(int index) {
+        System.arraycopy(storage, index + 1, storage, index, size - 1 - index);
+        storage[size - 1] = null;
+    }
+
+    @Override
+    protected void inputResume(int index, Resume resume) {
+        int insPoint = -index - 1;
+        System.arraycopy(storage, insPoint, storage, insPoint + 1, size - insPoint);
+        storage[insPoint] = resume;
     }
 
     @Override
