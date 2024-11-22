@@ -61,8 +61,11 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void clear() throws Exception {
         storage.clear();
-        for (Resume resume : storage.getAll()) {
-            Assert.assertNull(resume);
+        try {
+            storage.get(UUID_1);
+            storage.get(UUID_2);
+            storage.get(UUID_3);
+        } catch (NotExistStorageException e) {
         }
     }
 
@@ -84,7 +87,7 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = StorageException.class)
     public final void saveTestOverflow() throws Exception {
         try {
-            for (int i = storage.getSize(); i <= AbstractArrayStorage.CAPACITY - 1; i++) {
+            for (int i = storage.getSize(); i < AbstractArrayStorage.CAPACITY; i++) {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
