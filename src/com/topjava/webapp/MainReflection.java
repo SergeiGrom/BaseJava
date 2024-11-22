@@ -14,7 +14,6 @@ public class MainReflection {
         System.out.println(field.getName());
         System.out.println(field.get(resume));
         field.set(resume, "new_uuid");
-        //TODO : invoke r.toString via reflection
         System.out.println(resume);
 
         invokeToStringMethod(resume);

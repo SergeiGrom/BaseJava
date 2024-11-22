@@ -11,7 +11,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public abstract class AbstractArrayStorage implements Storage {
-    protected final int CAPACITY = 10000;
+    protected static final int CAPACITY = 10000;
     protected final Resume[] storage = new Resume[CAPACITY];
     protected int size;
 
@@ -26,7 +26,6 @@ public abstract class AbstractArrayStorage implements Storage {
             throw new NotExistStorageException(resume.getUuid());
         } else {
             storage[index] = resume;
-            System.out.println(uuid + " UPDATED");
         }
     }
 

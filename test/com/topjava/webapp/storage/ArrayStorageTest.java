@@ -1,12 +1,8 @@
 package com.topjava.webapp.storage;
 
-import org.junit.Before;
+public class ArrayStorageTest extends AbstractArrayStorageTest {
 
-import static org.junit.Assert.*;
-
-public class ArrayStorageTest extends AbstractArrayStorageTest{
-
-    @Before
-    public void setUp() throws Exception {
+    public ArrayStorageTest() {
+        super(new ArrayStorage());
     }
 }
