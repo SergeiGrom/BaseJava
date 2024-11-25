@@ -42,8 +42,8 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test
-    public void getSize() throws Exception {
-        Assert.assertEquals(3, storage.getSize());
+    public void size() throws Exception {
+        Assert.assertEquals(3, storage.size());
     }
 
     @Test
@@ -80,9 +80,9 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test
-    public void clearGetSizeZero() throws Exception {
+    public void clearSizeZero() throws Exception {
         storage.clear();
-        Assert.assertEquals(0, storage.getSize());
+        Assert.assertEquals(0, storage.size());
     }
 
     @Test
@@ -97,7 +97,7 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = StorageException.class)
     public final void saveTestOverflow() throws Exception {
         try {
-            for (int i = storage.getSize(); i < AbstractArrayStorage.CAPACITY; i++) {
+            for (int i = storage.size(); i < AbstractArrayStorage.CAPACITY; i++) {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
@@ -114,13 +114,13 @@ public abstract class AbstractArrayStorageTest {
     @Test
     public void saveGetNewSize() throws Exception {
         storage.save(RESUME_4);
-        Assert.assertEquals(4, storage.getSize());
+        Assert.assertEquals(4, storage.size());
     }
 
     @Test
     public void delete() throws Exception {
         storage.delete(UUID_1);
-        Assert.assertEquals(2, storage.getSize());
+        Assert.assertEquals(2, storage.size());
         try {
             storage.get(UUID_1);
         } catch (NotExistStorageException e) {

@@ -10,12 +10,12 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int CAPACITY = 10000;
     protected final Resume[] storage = new Resume[CAPACITY];
     protected int size;
 
-    public int getSize() {
+    public int size() {
         return size;
     }
 

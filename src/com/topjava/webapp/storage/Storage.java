@@ -4,7 +4,7 @@ import com.topjava.webapp.model.Resume;
 
 public interface Storage {
 
-    int getSize();
+    int size();
 
     void update(Resume resume);
 
