@@ -37,7 +37,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() throws Exception {
-        storage.get("dummy");
+        storage.update(new Resume("dummy"));
     }
 
     @Test
@@ -104,7 +104,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void deleteGetNotExistStorageException() throws Exception {
-        storage.get("dummy");
+        storage.delete("dummy");
     }
 
     private void assertSize(int size) {
