@@ -2,20 +2,45 @@ package com.topjava.webapp.storage;
 
 import com.topjava.webapp.model.Resume;
 
-public class ListStorage extends AbstractStorage{
+import java.util.ArrayList;
+
+public class ListStorage extends AbstractStorage {
+    protected ArrayList<Resume> storage = new ArrayList<>();
+
+
+    @Override
+    protected void updateResume(Object key, Resume resume) {
+
+    }
+
+    @Override
+    protected Resume getResume(Object key) {
+        return null;
+    }
+
+    @Override
+    protected void saveResume(Object key, Resume resume) {
+
+    }
+
+    @Override
+    protected void deleteResume(Object key) {
+
+    }
+
+    @Override
+    protected boolean isExist(String uuid) {
+        return false;
+    }
+
+    @Override
+    protected Object getKey(String uuid) {
+        return null;
+    }
+
     @Override
     public int size() {
         return 0;
-    }
-
-    @Override
-    public void update(Resume resume) {
-
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        return null;
     }
 
     @Override
@@ -26,15 +51,5 @@ public class ListStorage extends AbstractStorage{
     @Override
     public Resume[] getAll() {
         return new Resume[0];
-    }
-
-    @Override
-    public void save(Resume resume) {
-
-    }
-
-    @Override
-    public void delete(String uuid) {
-
     }
 }

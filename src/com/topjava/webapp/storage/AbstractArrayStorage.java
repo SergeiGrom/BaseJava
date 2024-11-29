@@ -1,7 +1,5 @@
 package com.topjava.webapp.storage;
 
-import com.topjava.webapp.exception.ExistStorageException;
-import com.topjava.webapp.exception.NotExistStorageException;
 import com.topjava.webapp.exception.StorageException;
 import com.topjava.webapp.model.Resume;
 
@@ -13,67 +11,47 @@ import java.util.Arrays;
 public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int CAPACITY = 10000;
     protected final Resume[] storage = new Resume[CAPACITY];
-    protected int size;
+    private static int size;
 
-    public int size() {
+    public static void setSize(int size) {
+        AbstractArrayStorage.size = size;
+    }
+
+    @Override
+    public final int size() {
         return size;
     }
 
-    public final void update(Resume resume) {
-        String uuid = resume.getUuid();
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(resume.getUuid());
-        } else {
-            storage[index] = resume;
-        }
-    }
-
-    public final Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return storage[index];
-    }
-
-    public void clear() {
+    @Override
+    public final void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    public Resume[] getAll() {
+    @Override
+    public final Resume[] getAll() {
         return Arrays.copyOf(storage, size);
     }
 
-    public final void save(Resume resume) {
-        String uuid = resume.getUuid();
-        int index = getIndex(uuid);
-        if (size == CAPACITY) {
-            throw new StorageException("STORAGE OVERFLOW", resume.getUuid());
-        }
-        if (index >= 0) {
-            throw new ExistStorageException(uuid);
-        } else {
-            inputResume(index, resume);
-            size++;
-        }
+    @Override
+    protected final void updateResume(Object index, Resume resume) {
+        storage[(int) index] = resume;
     }
 
-    public final void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        } else {
-            deleteResume(index);
-            storage[size - 1] = null;
-            size--;
-        }
+    @Override
+    protected final Resume getResume(Object index) {
+        return storage[(int) index];
     }
 
-    protected abstract void deleteResume(int index);
+    @Override
+    protected final boolean isExist(String uuid) {
+        int index = (int) getKey(uuid);
+        return index >= 0;
+    }
 
-    protected abstract void inputResume(int index, Resume resume);
-
-    protected abstract int getIndex(String uuid);
+    protected final void checkOverflow(String uuid) {
+        if (size >= CAPACITY) {
+            throw new StorageException("Storage overflow", uuid);
+        }
+    }
 }

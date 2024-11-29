@@ -1,20 +1,20 @@
 package com.topjava.webapp;
 
 import com.topjava.webapp.model.Resume;
-import com.topjava.webapp.storage.SortedArrayStorage;
+import com.topjava.webapp.storage.ArrayStorage;
 
 /**
  * Test for your com.topjava.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
+    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+
 
     public static void main(String[] args) {
         Resume r1 = new Resume("uuid1");
         Resume r2 = new Resume("uuid2");
         Resume r3 = new Resume("uuid3");
         Resume r4 = new Resume("uuid4");
-
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
         ARRAY_STORAGE.save(r1);
