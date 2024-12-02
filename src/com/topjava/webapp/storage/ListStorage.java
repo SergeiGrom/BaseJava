@@ -1,5 +1,6 @@
 package com.topjava.webapp.storage;
 
+import com.topjava.webapp.exception.StorageException;
 import com.topjava.webapp.model.Resume;
 
 import java.util.ArrayList;
@@ -9,47 +10,60 @@ public class ListStorage extends AbstractStorage {
 
 
     @Override
-    protected void updateResume(Object key, Resume resume) {
-
+    public final int size() {
+        return storage.size();
     }
 
     @Override
-    protected Resume getResume(Object key) {
-        return null;
+    public final Resume[] getAll() {
+        return storage.toArray(new Resume[0]);
     }
 
     @Override
-    protected void saveResume(Object key, Resume resume) {
-
+    public final void clear() {
+        storage.clear();
     }
 
     @Override
-    protected void deleteResume(Object key) {
-
+    protected final void updateResume(Object key, Resume resume) {
+        storage.set((int) key, resume);
     }
 
     @Override
-    protected boolean isExist(String uuid) {
-        return false;
+    protected final Resume getResume(Object key) {
+        return storage.get((int) key);
     }
 
     @Override
-    protected Object getKey(String uuid) {
-        return null;
+    protected final void saveResume(Object key, Resume resume) {
+        checkOverflow(resume.getUuid());
+        storage.add(resume);
     }
 
     @Override
-    public int size() {
-        return 0;
+    protected final void deleteResume(Object key) {
+        storage.remove((int) key);
     }
 
     @Override
-    public void clear() {
-
+    protected final boolean isExist(String uuid) {
+        int index = (int) getKey(uuid);
+        return index >= 0;
     }
 
     @Override
-    public Resume[] getAll() {
-        return new Resume[0];
+    protected final Object getKey(String uuid) {
+        for (int i = 0; i < size(); i++) {
+            if (storage.get(i).getUuid().equals(uuid)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void checkOverflow(String uuid) {
+        if (size() == Integer.MAX_VALUE) {
+            throw new StorageException("Storage overflow", uuid);
+        }
     }
 }

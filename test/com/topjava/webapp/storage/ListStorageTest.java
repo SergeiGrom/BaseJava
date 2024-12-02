@@ -1,24 +1,23 @@
 package com.topjava.webapp.storage;
 
 import com.topjava.webapp.exception.NotExistStorageException;
-import com.topjava.webapp.exception.StorageException;
 import com.topjava.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Test;
 
-public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
+public class ListStorageTest extends AbstractStorageTest {
 
-    public AbstractArrayStorageTest(Storage storage) {
-        super(storage);
+    public ListStorageTest() {
+        super(new <Resume>ListStorage());
     }
 
     @Test
-    public void size() throws Exception {
+    public void size() {
         assertSize(3);
     }
 
     @Test
-    public void clear() throws Exception {
+    public void clear() {
         try {
             storage.get(RESUME_1.getUuid());
             storage.get(RESUME_2.getUuid());
@@ -32,20 +31,8 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
     }
 
     @Test
-    public void getAll() throws Exception {
+    public void getAll() {
         Resume[] expected = new Resume[]{RESUME_1, RESUME_2, RESUME_3};
         Assert.assertArrayEquals(expected, storage.getAll());
-    }
-
-    @Test(expected = StorageException.class)
-    public final void checkOverflow() throws Exception {
-        try {
-            for (int i = storage.size(); i < AbstractArrayStorage.CAPACITY; i++) {
-                storage.save(new Resume());
-            }
-        } catch (StorageException e) {
-            Assert.fail("Overflow exception occurred before storage overflow");
-        }
-        storage.save(new Resume());
     }
 }

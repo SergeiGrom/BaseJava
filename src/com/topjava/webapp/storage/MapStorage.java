@@ -3,6 +3,8 @@ package com.topjava.webapp.storage;
 import com.topjava.webapp.model.Resume;
 
 public class MapStorage extends AbstractStorage{
+    //TODO Lesson5 Part2
+
     @Override
     protected void updateResume(Object key, Resume resume) {
 
