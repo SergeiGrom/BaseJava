@@ -61,7 +61,7 @@ public class ListStorage extends AbstractStorage {
         return -1;
     }
 
-    private void checkOverflow(String uuid) {
+    protected final void checkOverflow(String uuid) {
         if (size() == Integer.MAX_VALUE) {
             throw new StorageException("Storage overflow", uuid);
         }
