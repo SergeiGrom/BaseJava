@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class ListStorage extends AbstractStorage {
     protected ArrayList<Resume> storage = new ArrayList<>();
 
-
     @Override
     public final int size() {
         return storage.size();

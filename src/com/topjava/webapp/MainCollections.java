@@ -4,7 +4,7 @@ import com.topjava.webapp.model.Resume;
 
 import java.util.*;
 
-public class mainCollections {
+public class MainCollections {
     private static final String UUID_1 = "uuid1";
     private static final Resume RESUME_1 = new Resume(UUID_1);
     private static final String UUID_2 = "uuid2";
@@ -48,7 +48,7 @@ public class mainCollections {
 
         System.out.println();
 
-        for (Map.Entry<String,Resume> entry: map.entrySet()) {
+        for (Map.Entry<String, Resume> entry : map.entrySet()) {
             System.out.println(entry.getValue());
         }
     }
