@@ -6,36 +6,36 @@ import com.topjava.webapp.model.Resume;
 public abstract class AbstractStorage implements Storage {
     @Override
     public final void update(Resume resume) {
-        Object key = getKeyOrNotExistExc(resume.getUuid());
+        Object key = getNotExistingSearchKey(resume.getUuid());
         updateResume(key, resume);
     }
 
     @Override
     public final Resume get(String uuid) {
-        Object key = getKeyOrNotExistExc(uuid);
+        Object key = getNotExistingSearchKey(uuid);
         return getResume(key);
     }
 
     @Override
     public final void save(Resume resume) {
-        Object key = getKeyOrExistExc(resume.getUuid());
+        Object key = getExistingSearchKey(resume.getUuid());
         saveResume(key, resume);
     }
 
     @Override
     public final void delete(String uuid) {
-        Object key = getKeyOrNotExistExc(uuid);
+        Object key = getNotExistingSearchKey(uuid);
         deleteResume(key);
     }
 
-    protected final Object getKeyOrNotExistExc(String uuid) {
+    protected final Object getNotExistingSearchKey(String uuid) {
         if (!isExist(uuid)) {
             throw new NotExistStorageException(uuid);
         }
         return getKey(uuid);
     }
 
-    protected final Object getKeyOrExistExc(String uuid) {
+    protected final Object getExistingSearchKey(String uuid) {
         if (isExist(uuid)) {
             throw new ExistStorageException(uuid);
         }

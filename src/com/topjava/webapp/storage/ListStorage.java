@@ -1,12 +1,12 @@
 package com.topjava.webapp.storage;
 
-import com.topjava.webapp.exception.StorageException;
 import com.topjava.webapp.model.Resume;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListStorage extends AbstractStorage {
-    protected ArrayList<Resume> storage = new ArrayList<>();
+    protected List<Resume> storage = new ArrayList<>();
 
     @Override
     public final int size() {
@@ -35,7 +35,6 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     protected final void saveResume(Object key, Resume resume) {
-        checkOverflow(resume.getUuid());
         storage.add(resume);
     }
 
@@ -58,11 +57,5 @@ public class ListStorage extends AbstractStorage {
             }
         }
         return -1;
-    }
-
-    protected final void checkOverflow(String uuid) {
-        if (size() == Integer.MAX_VALUE) {
-            throw new StorageException("Storage overflow", uuid);
-        }
     }
 }
