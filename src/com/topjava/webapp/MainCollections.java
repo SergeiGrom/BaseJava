@@ -1,6 +1,8 @@
 package com.topjava.webapp;
 
 import com.topjava.webapp.model.Resume;
+import com.topjava.webapp.storage.ListStorage;
+import com.topjava.webapp.storage.MapStorage;
 
 import java.util.*;
 
@@ -20,6 +22,13 @@ public class MainCollections {
         collection.add(RESUME_2);
         collection.add(RESUME_3);
         collection.add(RESUME_4);
+
+        ListStorage storage = new ListStorage();
+        storage.save(RESUME_1);
+        storage.save(RESUME_2);
+        storage.save(RESUME_3);
+        storage.save(RESUME_4);
+        System.out.println("LIST\n" + storage.getAllSorted());
 
         for (Resume resume : collection) {
             System.out.println(resume);
@@ -51,5 +60,12 @@ public class MainCollections {
         for (Map.Entry<String, Resume> entry : map.entrySet()) {
             System.out.println(entry.getValue());
         }
+
+        MapStorage mapStorage = new MapStorage();
+        mapStorage.save(RESUME_1);
+        mapStorage.save(RESUME_2);
+        mapStorage.save(RESUME_3);
+        mapStorage.save(RESUME_4);
+        System.out.println("MAP\n" + mapStorage.getAllSorted());
     }
 }

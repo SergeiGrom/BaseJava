@@ -14,18 +14,18 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
     @Test
     public void getAll() throws Exception {
         Resume[] expected = new Resume[]{RESUME_1, RESUME_2, RESUME_3};
-        Assert.assertArrayEquals(expected, storage.getAll());
+        Assert.assertArrayEquals(expected, storage.getAllSorted());
     }
 
     @Test(expected = StorageException.class)
     public final void checkOverflow() throws Exception {
         try {
             for (int i = storage.size(); i < AbstractArrayStorage.CAPACITY; i++) {
-                storage.save(new Resume());
+                storage.save(new Resume(""));
             }
         } catch (StorageException e) {
             Assert.fail("Overflow exception occurred before storage overflow");
         }
-        storage.save(new Resume());
+        storage.save(new Resume(""));
     }
 }
