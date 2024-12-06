@@ -10,7 +10,7 @@ public interface Storage {
 
     void update(Resume resume);
 
-    Resume get(String uuid);
+    Resume get(Object searchedKey);
 
     void clear();
 
@@ -18,5 +18,5 @@ public interface Storage {
 
     void save(Resume resume);
 
-    void delete(String uuid);
+    void delete(Object searchedKey);
 }

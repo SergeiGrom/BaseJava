@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class MapStorageTest extends AbstractStorageTest{
 
     public MapStorageTest() {
-        super(new <Resume>MapStorage());
+        super(new <Resume>MapUuidStorage());
     }
 
     @Test

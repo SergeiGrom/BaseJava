@@ -3,6 +3,7 @@ package com.topjava.webapp.storage;
 import com.topjava.webapp.model.Resume;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
@@ -14,13 +15,15 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public final List<Resume> getAllSorted() {
-        return storage;
+    public final void clear() {
+        storage.clear();
     }
 
     @Override
-    public final void clear() {
-        storage.clear();
+    protected final List<Resume> getAllSortedResumes(Comparator<Resume> comparator) {
+        List<Resume> resumes = new ArrayList<>(storage);
+        resumes.sort(comparator);
+        return resumes;
     }
 
     @Override
@@ -44,15 +47,15 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected final boolean isExist(String uuid) {
-        int index = (int) getKey(uuid);
+    protected final boolean isExist(Object key) {
+        int index = (int) getKey(key);
         return index >= 0;
     }
 
     @Override
-    protected final Object getKey(String uuid) {
+    protected final Object getKey(Object key) {
         for (int i = 0; i < size(); i++) {
-            if (storage.get(i).getUuid().equals(uuid)) {
+            if (storage.get(i).getUuid().equals(key)) {
                 return i;
             }
         }

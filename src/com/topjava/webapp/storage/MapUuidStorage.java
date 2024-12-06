@@ -2,12 +2,9 @@ package com.topjava.webapp.storage;
 
 import com.topjava.webapp.model.Resume;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class MapStorage extends AbstractStorage {
+public class MapUuidStorage extends AbstractStorage {
     protected Map<String, Resume> storage = new HashMap<>();
 
     @Override
@@ -31,13 +28,20 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(String uuid) {
-        return storage.containsKey(uuid);
+    protected boolean isExist(Object key) {
+        return storage.containsKey(key);
     }
 
     @Override
-    protected Object getKey(String uuid) {
-        return uuid;
+    protected Object getKey(Object key) {
+        return key;
+    }
+
+    @Override
+    protected List<Resume> getAllSortedResumes(Comparator<Resume> comparator) {
+        List<Resume> resumes = new ArrayList<>(storage.values());
+        resumes.sort(comparator);
+        return resumes;
     }
 
     @Override
@@ -48,10 +52,5 @@ public class MapStorage extends AbstractStorage {
     @Override
     public void clear() {
         storage.clear();
-    }
-
-    @Override
-    public List<Resume> getAllSorted() {
-        return new ArrayList<>(storage.values());
     }
 }

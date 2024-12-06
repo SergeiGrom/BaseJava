@@ -10,6 +10,7 @@ public class Resume {
 
     // Unique identifier
     private final String uuid;
+
     private final String fullName;
 
     public Resume(String uuid, String fullName) {
@@ -29,6 +30,11 @@ public class Resume {
     public String getUuid() {
         return uuid;
     }
+
+    public String getFullName() {
+        return fullName;
+    }
+
 
     @Override
     public String toString() {

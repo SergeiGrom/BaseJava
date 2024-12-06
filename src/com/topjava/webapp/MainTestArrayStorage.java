@@ -11,10 +11,10 @@ public class MainTestArrayStorage {
 
 
     public static void main(String[] args) {
-        Resume r1 = new Resume("uuid1","111");
-        Resume r2 = new Resume("uuid2");
-        Resume r3 = new Resume("uuid3");
-        Resume r4 = new Resume("uuid4");
+        Resume r1 = new Resume("uuid1","1");
+        Resume r2 = new Resume("uuid2","2");
+        Resume r3 = new Resume("uuid3","3");
+        Resume r4 = new Resume("uuid4","4");
         Resume r5 = new Resume();
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);

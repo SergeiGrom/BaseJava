@@ -3,8 +3,7 @@ package com.topjava.webapp.storage;
 import com.topjava.webapp.exception.StorageException;
 import com.topjava.webapp.model.Resume;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Array based storage for Resumes
@@ -30,8 +29,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public final List<Resume> getAllSorted() {
-        return Arrays.asList(Arrays.copyOf(storage, size));
+    protected final List<Resume> getAllSortedResumes(Comparator<Resume> comparator) {
+        List<Resume> listStorage = Arrays.asList(Arrays.copyOf(storage, size));
+        listStorage.sort(comparator);
+        return listStorage;
     }
 
     @Override
@@ -45,9 +46,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected final boolean isExist(String uuid) {
-        int index = (int) getKey(uuid);
-        return index >= 0;
+    protected final boolean isExist(Object index) {
+        return (int) getKey(index) >= 0;
     }
 
     protected final void checkOverflow(String uuid) {

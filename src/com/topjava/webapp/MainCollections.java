@@ -2,19 +2,20 @@ package com.topjava.webapp;
 
 import com.topjava.webapp.model.Resume;
 import com.topjava.webapp.storage.ListStorage;
-import com.topjava.webapp.storage.MapStorage;
+import com.topjava.webapp.storage.MapResumeStorage;
+import com.topjava.webapp.storage.MapUuidStorage;
 
 import java.util.*;
 
 public class MainCollections {
     private static final String UUID_1 = "uuid1";
-    private static final Resume RESUME_1 = new Resume(UUID_1);
+    private static final Resume RESUME_1 = new Resume(UUID_1, "A");
     private static final String UUID_2 = "uuid2";
-    private static final Resume RESUME_2 = new Resume(UUID_2);
+    private static final Resume RESUME_2 = new Resume(UUID_2, "B");
     private static final String UUID_3 = "uuid3";
-    private static final Resume RESUME_3 = new Resume(UUID_3);
+    private static final Resume RESUME_3 = new Resume(UUID_3, "C");
     private static final String UUID_4 = "uuid4";
-    private static final Resume RESUME_4 = new Resume(UUID_4);
+    private static final Resume RESUME_4 = new Resume(UUID_4, "D");
 
     public static void main(String[] args) {
         Collection<Resume> collection = new ArrayList<>();
@@ -24,10 +25,10 @@ public class MainCollections {
         collection.add(RESUME_4);
 
         ListStorage storage = new ListStorage();
-        storage.save(RESUME_1);
         storage.save(RESUME_2);
-        storage.save(RESUME_3);
         storage.save(RESUME_4);
+        storage.save(RESUME_3);
+        storage.save(RESUME_1);
         System.out.println("LIST\n" + storage.getAllSorted());
 
         for (Resume resume : collection) {
@@ -61,11 +62,18 @@ public class MainCollections {
             System.out.println(entry.getValue());
         }
 
-        MapStorage mapStorage = new MapStorage();
-        mapStorage.save(RESUME_1);
-        mapStorage.save(RESUME_2);
-        mapStorage.save(RESUME_3);
-        mapStorage.save(RESUME_4);
-        System.out.println("MAP\n" + mapStorage.getAllSorted());
+        MapUuidStorage mapUuid = new MapUuidStorage();
+        mapUuid.save(RESUME_1);
+        mapUuid.save(RESUME_2);
+        mapUuid.save(RESUME_3);
+        mapUuid.save(RESUME_4);
+        System.out.println("MAP_UUID\n" + mapUuid.getAllSorted());
+
+        MapResumeStorage mapResume = new MapResumeStorage();
+        mapResume.save(RESUME_1);
+        mapResume.save(RESUME_2);
+        mapResume.save(RESUME_3);
+        mapResume.save(RESUME_4);
+        System.out.println("MAP_UUID\n" + mapResume.getAllSorted());
     }
 }
