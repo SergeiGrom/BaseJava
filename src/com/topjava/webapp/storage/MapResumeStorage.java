@@ -19,7 +19,7 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     protected void saveResume(Object key, Resume resume) {
-        storage.put((Resume) key, resume);
+        storage.put(resume, resume);
     }
 
     @Override
@@ -28,20 +28,23 @@ public class MapResumeStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExist(Object key) {
-        return storage.containsKey((Resume) key);
+    protected boolean isExist(Object searchedKey) {
+        if (searchedKey == null) {
+            throw new NullPointerException("Search key is null");
+        }
+        return storage.containsKey((Resume) searchedKey);
     }
 
     @Override
-    protected Object getKey(Object key) {
-        return key;
+    protected Object getKey(Object searchedKey) {
+        return storage.get((Resume) searchedKey);
     }
 
     @Override
-    protected List<Resume> getAllSortedResumes(Comparator<Resume> comparator) {
-        List<Resume> resumes = new ArrayList<>(storage.values());
-        resumes.sort(comparator);
-        return resumes;
+    protected List<Resume> getAll() {
+        List<Resume> listStorage = new ArrayList<>(storage.values());
+        listStorage.sort(RESUME_COMPARATOR);
+        return listStorage;
     }
 
     @Override

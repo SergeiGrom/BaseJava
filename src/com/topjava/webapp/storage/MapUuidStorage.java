@@ -29,19 +29,21 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected boolean isExist(Object key) {
-        return storage.containsKey(key);
+        Resume resume = (Resume) key;
+        return storage.containsKey(resume.getUuid());
     }
 
     @Override
     protected Object getKey(Object key) {
-        return key;
+        Resume resume = (Resume) key;
+        return resume.getUuid();
     }
 
     @Override
-    protected List<Resume> getAllSortedResumes(Comparator<Resume> comparator) {
-        List<Resume> resumes = new ArrayList<>(storage.values());
-        resumes.sort(comparator);
-        return resumes;
+    protected List<Resume> getAll() {
+        List<Resume> listStorage = new ArrayList<>(storage.values());
+        listStorage.sort(RESUME_COMPARATOR);
+        return listStorage;
     }
 
     @Override

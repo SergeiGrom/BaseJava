@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class AbstractStorageTest {
     Storage storage;
     static final String UUID_NOT_EXIST = "UUID_NOT_EXIST";
@@ -21,10 +23,10 @@ public class AbstractStorageTest {
 
     //    introduce static block for education
     static {
-        RESUME_1 = new Resume("uuid1");
-        RESUME_2 = new Resume("uuid2");
-        RESUME_3 = new Resume("uuid3");
-        RESUME_4 = new Resume("uuid4");
+        RESUME_1 = new Resume("uuid1", "name_1");
+        RESUME_2 = new Resume("uuid2", "name_2");
+        RESUME_3 = new Resume("uuid3", "name_3");
+        RESUME_4 = new Resume("uuid4", "name_4");
     }
 
     @Before
@@ -51,7 +53,7 @@ public class AbstractStorageTest {
         }
         storage.clear();
         assertSize(0);
-        Assert.assertArrayEquals(new Storage[0], storage.getAll());
+        Assert.assertEquals(new ArrayList<>(0), storage.getAllSorted());
     }
 
     @Test
@@ -107,6 +109,6 @@ public class AbstractStorageTest {
     }
 
     protected void assertGet(Resume resume) {
-        Assert.assertEquals(resume, storage.get(resume.getUuid()));
+        Assert.assertEquals(resume, storage.get(resume));
     }
 }

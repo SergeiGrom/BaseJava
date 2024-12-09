@@ -7,53 +7,54 @@ import java.util.Comparator;
 import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
+    public final Comparator<Resume> RESUME_COMPARATOR = Comparator
+            .comparing(Resume::getFullName)
+            .thenComparing(Resume::getUuid);
+
     @Override
     public final void update(Resume resume) {
-        Object key = getNotExistingSearchKey(resume.getUuid());
+        Object key = getExistingSearchKey(resume);
         updateResume(key, resume);
     }
 
     @Override
     public final Resume get(Object searchedKey) {
-        Object key = getNotExistingSearchKey(searchedKey);
+        Object key = getExistingSearchKey(searchedKey);
         return getResume(key);
     }
 
     @Override
     public final void save(Resume resume) {
-        Object key = getExistingSearchKey(resume.getUuid());
+        Object key = getNotExistingSearchKey(resume);
         saveResume(key, resume);
     }
 
     @Override
     public final void delete(Object searchedKey) {
-        Object key = getNotExistingSearchKey(searchedKey);
+        Object key = getExistingSearchKey(searchedKey);
         deleteResume(key);
     }
 
     @Override
     public final List<Resume> getAllSorted() {
-        Comparator<Resume> resumeByNameAndUuidComparator = Comparator
-                .comparing(Resume::getFullName)
-                .thenComparing(Resume::getUuid);
-        return getAllSortedResumes(resumeByNameAndUuidComparator);
+        return getAll();
     }
 
     protected final Object getNotExistingSearchKey(Object searchedKey) {
-        if (!isExist(searchedKey)) {
-            throw new NotExistStorageException(searchedKey.toString());
-        }
-        return getKey(searchedKey);
-    }
-
-    protected final Object getExistingSearchKey(Object searchedKey) {
         if (isExist(searchedKey)) {
             throw new ExistStorageException(searchedKey.toString());
         }
         return getKey(searchedKey);
     }
 
-    protected abstract List<Resume> getAllSortedResumes(Comparator<Resume> comparator);
+    protected final Object getExistingSearchKey(Object searchedKey) {
+        if (!isExist(searchedKey)) {
+            throw new NotExistStorageException(searchedKey.toString());
+        }
+        return getKey(searchedKey);
+    }
+
+    protected abstract List<Resume> getAll();
 
     protected abstract void updateResume(Object key, Resume resume);
 

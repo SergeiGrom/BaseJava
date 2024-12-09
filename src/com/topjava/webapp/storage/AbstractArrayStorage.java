@@ -29,9 +29,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected final List<Resume> getAllSortedResumes(Comparator<Resume> comparator) {
+    protected final List<Resume> getAll() {
         List<Resume> listStorage = Arrays.asList(Arrays.copyOf(storage, size));
-        listStorage.sort(comparator);
+        listStorage.sort(RESUME_COMPARATOR);
         return listStorage;
     }
 
@@ -46,8 +46,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected final boolean isExist(Object index) {
-        return (int) getKey(index) >= 0;
+    protected final boolean isExist(Object searchedKey) {
+        return (int) getKey(searchedKey) >= 0;
     }
 
     protected final void checkOverflow(String uuid) {

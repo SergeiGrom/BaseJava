@@ -5,6 +5,8 @@ import com.topjava.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
 public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
 
     public AbstractArrayStorageTest(Storage storage) {
@@ -12,9 +14,9 @@ public abstract class AbstractArrayStorageTest extends AbstractStorageTest {
     }
 
     @Test
-    public void getAll() throws Exception {
+    public void getAllSorted() throws Exception {
         Resume[] expected = new Resume[]{RESUME_1, RESUME_2, RESUME_3};
-        Assert.assertArrayEquals(expected, storage.getAllSorted());
+        Assert.assertArrayEquals(expected, new List[]{storage.getAllSorted()});
     }
 
     @Test(expected = StorageException.class)

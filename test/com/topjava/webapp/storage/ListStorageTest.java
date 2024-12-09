@@ -13,6 +13,6 @@ public class ListStorageTest extends AbstractStorageTest {
     @Test
     public void getAll() {
         Resume[] expected = new Resume[]{RESUME_1, RESUME_2, RESUME_3};
-        Assert.assertArrayEquals(expected, storage.getAll());
+        Assert.assertArrayEquals(expected, storage.getAllSorted().toArray(new Resume[0]));;
     }
 }

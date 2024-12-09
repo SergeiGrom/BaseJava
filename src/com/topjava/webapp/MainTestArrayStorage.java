@@ -15,7 +15,7 @@ public class MainTestArrayStorage {
         Resume r2 = new Resume("uuid2","2");
         Resume r3 = new Resume("uuid3","3");
         Resume r4 = new Resume("uuid4","4");
-        Resume r5 = new Resume();
+        Resume r5 = new Resume("asd");
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
         ARRAY_STORAGE.save(r1);
