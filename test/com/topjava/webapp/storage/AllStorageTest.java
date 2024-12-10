@@ -6,17 +6,9 @@ import com.topjava.webapp.model.Resume;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
-
-//@RunWith(Suite.class)
-//@Suite.SuiteClasses({
-//        ArrayStorageTest.class,
-//        SortedArrayStorageTest.class,
-//        ListStorageTest.class,
-//        MapUuidStorageTest.class,
-//        MapResumeStorage.class
-//})
 
 public class AllStorageTest {
     Storage storage;
