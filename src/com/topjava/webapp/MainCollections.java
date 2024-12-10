@@ -15,7 +15,7 @@ public class MainCollections {
     private static final String UUID_3 = "uuid3";
     private static final Resume RESUME_3 = new Resume(UUID_3, "C");
     private static final String UUID_4 = "uuid4";
-    private static final Resume RESUME_4 = new Resume(UUID_4, "D");
+    private static final Resume RESUME_4 = new Resume(UUID_4, "A");
 
     public static void main(String[] args) {
         // Lesson BLOCK

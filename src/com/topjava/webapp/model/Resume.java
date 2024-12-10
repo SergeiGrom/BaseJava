@@ -9,7 +9,7 @@ import java.util.UUID;
 public class Resume {
     // Unique identifier
     private final String uuid;
-    private final String fullName;
+    private String fullName;
 
     public Resume(String uuid, String fullName) {
         this.uuid = uuid;
@@ -29,6 +29,9 @@ public class Resume {
         return fullName;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     @Override
     public String toString() {

@@ -30,7 +30,7 @@ public class MapResumeStorage extends AbstractStorage {
     @Override
     protected boolean isExist(Object searchedKey) {
         if (searchedKey == null) {
-            throw new NullPointerException("Search key is null");
+            throw new NullPointerException("Search key in Map is null");
         }
         return storage.containsKey((Resume) searchedKey);
     }
