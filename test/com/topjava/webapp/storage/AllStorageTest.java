@@ -45,9 +45,9 @@ public class AllStorageTest {
     @Test
     public void clear() {
         try {
-            storage.get(RESUME_1);
-            storage.get(RESUME_2);
-            storage.get(RESUME_3);
+            storage.get(RESUME_1.getUuid());
+            storage.get(RESUME_2.getUuid());
+            storage.get(RESUME_3.getUuid());
         } catch (NotExistStorageException e) {
             Assert.fail("No Resumes to test Clear");
         }
@@ -60,7 +60,7 @@ public class AllStorageTest {
     public void update() throws Exception {
         Resume resume = new Resume("uuid1", "A");
         storage.update(resume);
-        Assert.assertSame(storage.get(RESUME_1), resume);
+        Assert.assertSame(storage.get(RESUME_1.getUuid()), resume);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -77,7 +77,7 @@ public class AllStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() throws Exception {
-        storage.get(RESUME_4);
+        storage.get(RESUME_4.getUuid());
     }
 
     @Test
@@ -94,14 +94,14 @@ public class AllStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void delete() throws Exception {
-        storage.delete(RESUME_1);
+        storage.delete(RESUME_1.getUuid());
         assertSize(2);
-        storage.get(RESUME_1);
+        storage.get(RESUME_1.getUuid());
     }
 
     @Test(expected = NotExistStorageException.class)
     public void deleteGetNotExistStorageException() throws Exception {
-        storage.delete(RESUME_4);
+        storage.delete(RESUME_4.getUuid());
     }
 
     @Test
@@ -117,6 +117,6 @@ public class AllStorageTest {
     }
 
     protected void assertGet(Resume resume) {
-        Assert.assertEquals(resume, storage.get(resume));
+        Assert.assertEquals(resume, storage.get(resume.getUuid()));
     }
 }
