@@ -9,24 +9,24 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     private static final Comparator<Resume> UUID_COMPARATOR = Comparator.comparing(Resume::getUuid);
 
     @Override
-    protected final void deleteResume(Object index) {
+    protected final void deleteResume(Integer index) {
         int size = size();
-        System.arraycopy(storage, (int) index + 1, storage, (int) index, size - 1 - (int) index);
+        System.arraycopy(storage,  index + 1, storage,  index, size - 1 -  index);
         setSize(--size);
     }
 
     @Override
-    protected final void saveResume(Object index, Resume resume) {
+    protected final void saveResume(Integer index, Resume resume) {
         checkOverflow(resume.getUuid());
         int size = size();
-        int insPoint = -(int) index - 1;
+        int insPoint = - index - 1;
         System.arraycopy(storage, insPoint, storage, insPoint + 1, size - insPoint);
         storage[insPoint] = resume;
         setSize(++size);
     }
 
     @Override
-    protected final Object getSearchKey(String uuid) {
+    protected final Integer getSearchKey(String uuid) {
         int size = size();
         Resume resume = new Resume(uuid,"test");
         return Arrays.binarySearch(storage, 0, size, resume, UUID_COMPARATOR);

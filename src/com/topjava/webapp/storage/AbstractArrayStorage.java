@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int CAPACITY = 10000;
     protected final Resume[] storage = new Resume[CAPACITY];
     private static int size;
@@ -34,18 +34,18 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected final void updateResume(Object index, Resume resume) {
-        storage[(int) index] = resume;
+    protected final void updateResume(Integer index, Resume resume) {
+        storage[index] = resume;
     }
 
     @Override
-    protected final Resume getResume(Object index) {
-        return storage[(int) index];
+    protected final Resume getResume(Integer index) {
+        return storage[index];
     }
 
     @Override
-    protected final boolean isExist(Object index) {
-        return (int) index >= 0;
+    protected final boolean isExist(Integer index) {
+        return index >= 0;
     }
 
     protected final void checkOverflow(String uuid) {

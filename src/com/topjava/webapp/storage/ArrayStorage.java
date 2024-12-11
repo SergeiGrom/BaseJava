@@ -8,14 +8,14 @@ import com.topjava.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected final void deleteResume(Object index) {
+    protected final void deleteResume(Integer index) {
         int size = size();
-        storage[(int) index] = storage[size - 1];
+        storage[ index] = storage[size - 1];
         setSize(--size);
     }
 
     @Override
-    protected final void saveResume(Object index, Resume resume) {
+    protected final void saveResume(Integer index, Resume resume) {
         checkOverflow(resume.getUuid());
         int size = size();
         storage[size] = resume;
@@ -23,7 +23,7 @@ public class ArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected final Object getSearchKey(String uuid) {
+    protected final Integer getSearchKey(String uuid) {
         for (int i = 0; i < size(); i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
