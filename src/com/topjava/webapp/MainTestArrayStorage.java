@@ -22,11 +22,11 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.save(r4);
         ARRAY_STORAGE.save(r5);
 
-        System.out.printf("Get r1: %s%n", ARRAY_STORAGE.get(r1));
-        System.out.printf("Get r2: %s%n", ARRAY_STORAGE.get(r2));
-        System.out.printf("Get r3: %s%n", ARRAY_STORAGE.get(r3));
-        System.out.printf("Get r4: %s%n", ARRAY_STORAGE.get(r4));
-        System.out.printf("Get r5: %s%n", ARRAY_STORAGE.get(r5));
+        System.out.printf("Get r1: %s%n", ARRAY_STORAGE.get(r1.getUuid()));
+        System.out.printf("Get r2: %s%n", ARRAY_STORAGE.get(r2.getUuid()));
+        System.out.printf("Get r3: %s%n", ARRAY_STORAGE.get(r3.getUuid()));
+        System.out.printf("Get r4: %s%n", ARRAY_STORAGE.get(r4.getUuid()));
+        System.out.printf("Get r5: %s%n", ARRAY_STORAGE.get(r5.getUuid()));
 //        System.out.printf("Get dummy: %s%n%n", ARRAY_STORAGE.get("dummy"));
         System.out.printf("Size: %d%n%n", ARRAY_STORAGE.size());
 
@@ -36,7 +36,7 @@ public class MainTestArrayStorage {
         ARRAY_STORAGE.update(r4);
 
         printAll();
-        ARRAY_STORAGE.delete(r4);
+        ARRAY_STORAGE.delete(r4.getUuid());
         printAll();
         ARRAY_STORAGE.clear();
         printAll();

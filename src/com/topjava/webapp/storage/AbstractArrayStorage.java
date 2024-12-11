@@ -46,8 +46,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected final boolean isExist(Object searchedKey) {
-        return (int) getKey(searchedKey) >= 0;
+    protected final boolean isExist(Object index) {
+        return (int) index >= 0;
     }
 
     protected final void checkOverflow(String uuid) {

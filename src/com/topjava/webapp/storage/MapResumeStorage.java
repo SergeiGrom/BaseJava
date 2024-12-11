@@ -5,39 +5,36 @@ import com.topjava.webapp.model.Resume;
 import java.util.*;
 
 public class MapResumeStorage extends AbstractStorage {
-    protected Map<Resume, Resume> storage = new HashMap<>();
+    protected Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected void updateResume(Object key, Resume resume) {
-        storage.replace((Resume) key, resume);
+    protected void updateResume(Object searchKey, Resume resume) {
+        storage.replace(resume.getUuid(), resume);
     }
 
     @Override
-    protected Resume getResume(Object key) {
-        return storage.get((Resume) key);
+    protected Resume getResume(Object resume) {
+        return (Resume) resume;
     }
 
     @Override
-    protected void saveResume(Object key, Resume resume) {
-        storage.put(resume, resume);
+    protected void saveResume(Object searchKey, Resume resume) {
+        storage.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected void deleteResume(Object key) {
-        storage.remove((Resume) key);
+    protected void deleteResume(Object resume) {
+        storage.remove(((Resume) resume).getUuid());
     }
 
     @Override
-    protected boolean isExist(Object searchedKey) {
-        if (searchedKey == null) {
-            throw new NullPointerException("Search key in Map is null");
-        }
-        return storage.containsKey((Resume) searchedKey);
+    protected boolean isExist(Object resume) {
+        return resume != null;
     }
 
     @Override
-    protected Object getKey(Object searchedKey) {
-        return storage.get((Resume) searchedKey);
+    protected Resume getSearchKey(String uuid) {
+        return storage.get(uuid);
     }
 
     @Override

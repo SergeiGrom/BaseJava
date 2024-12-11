@@ -1,7 +1,7 @@
 package com.topjava.webapp.exception;
 
 public class ExistStorageException extends StorageException{
-    public ExistStorageException(String resume) {
-        super(resume + " ALREADY EXIST", resume);
+    public ExistStorageException(String uuid) {
+        super("Resume UUID = [" + uuid + "] NOT EXIST", uuid);
     }
 }

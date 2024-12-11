@@ -1,10 +1,10 @@
 package com.topjava.webapp.exception;
 
 public class StorageException extends RuntimeException {
-    private final String resume;
+    private final String uuid;
 
-    public StorageException(String message, String resume) {
+    public StorageException(String message, String uuid) {
         super(message);
-        this.resume = resume;
+        this.uuid = uuid;
     }
 }

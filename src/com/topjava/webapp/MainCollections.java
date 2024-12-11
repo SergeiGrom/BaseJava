@@ -9,7 +9,7 @@ import java.util.*;
 
 public class MainCollections {
     private static final String UUID_1 = "uuid1";
-    private static final Resume RESUME_1 = new Resume(UUID_1, "A");
+    private static final Resume RESUME_1 = new Resume("uuid1", "A");
     static final String UUID_2 = "uuid2";
     static  Resume RESUME_2 = new Resume(UUID_2, "B");
     private static final String UUID_3 = "uuid3";
@@ -68,7 +68,7 @@ public class MainCollections {
 //        RESUME_2 = new Resume(UUID_2, "NEW NAME");
         storage.update(RESUME_2);
         System.out.println(storage.getAllSorted());
-        storage.delete(RESUME_1);
+        storage.delete(UUID_1);
         System.out.println("SIZE: " + storage.size());
 //        storage.update(RESUME_1);
         System.out.println(storage.getAllSorted());
@@ -84,7 +84,7 @@ public class MainCollections {
 //        RESUME_2 = new Resume(UUID_2, "NEW NAME");
         mapUuid.update(RESUME_2);
         System.out.println(mapUuid.getAllSorted());
-        mapUuid.delete(RESUME_2);
+        mapUuid.delete(UUID_2);
         System.out.println("SIZE: " + mapUuid.size());
         System.out.println(mapUuid.getAllSorted());
 
@@ -99,7 +99,7 @@ public class MainCollections {
         RESUME_2 = new Resume(UUID_2, "NEW NAME");
         mapResume.update(RESUME_2);
         System.out.println(mapResume.getAllSorted());
-        mapResume.delete(RESUME_2);
+        mapResume.delete(UUID_2);
         System.out.println("SIZE: " + mapResume.size());
         System.out.println(mapResume.getAllSorted());
     }

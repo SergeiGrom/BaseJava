@@ -9,14 +9,17 @@ import java.util.UUID;
 public class Resume {
     // Unique identifier
     private final String uuid;
-    private String fullName;
+    private final String fullName;
 
     public Resume(String uuid, String fullName) {
+        Objects.requireNonNull(uuid, "UUID must not be null");
+        Objects.requireNonNull(fullName, "Full_Name must not be null");
         this.uuid = uuid;
         this.fullName = fullName;
     }
 
     public Resume(String fullName) {
+        Objects.requireNonNull(fullName, "Full_Name must not be null");
         this.uuid = UUID.randomUUID().toString();
         this.fullName = fullName;
     }
@@ -29,13 +32,9 @@ public class Resume {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     @Override
     public String toString() {
-        return "Resume: " + "uuid = " + uuid + ", " + "full_name = " + fullName;
+        return "uuid: " + uuid + ", " + "full_name: " + fullName;
     }
 
     @Override
@@ -43,11 +42,11 @@ public class Resume {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
-        return Objects.equals(uuid, resume.uuid);
+        return Objects.equals(uuid, resume.uuid) && Objects.equals(fullName, resume.fullName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(uuid);
+        return Objects.hash(uuid, fullName);
     }
 }
