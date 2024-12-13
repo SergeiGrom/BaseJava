@@ -1,5 +1,7 @@
 package com.topjava.webapp.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -10,6 +12,8 @@ public class Resume {
     // Unique identifier
     private final String uuid;
     private final String fullName;
+    private final List<Contact> contacts = new ArrayList<>();
+    private final List<Section> sections = new ArrayList<>();
 
     public Resume(String uuid, String fullName) {
         Objects.requireNonNull(uuid, "UUID must not be null");
@@ -24,12 +28,22 @@ public class Resume {
         this.fullName = fullName;
     }
 
+
+
     public String getUuid() {
         return uuid;
     }
 
     public String getFullName() {
         return fullName;
+    }
+
+    public void addContact(Contact contact) {
+        contacts.add(contact);
+    }
+
+    public void addSection(Section section) {
+        sections.add(section);
     }
 
     @Override
