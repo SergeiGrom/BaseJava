@@ -1,7 +1,7 @@
 package com.topjava.webapp.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -12,8 +12,8 @@ public class Resume {
     // Unique identifier
     private final String uuid;
     private final String fullName;
-    private final List<Contact> contacts = new ArrayList<>();
-    private final List<Section> sections = new ArrayList<>();
+    private final Map<ContactType, Contact> contacts = new HashMap<>();
+    private final Map<SectionType, Section> sections = new HashMap<>();
 
     public Resume(String uuid, String fullName) {
         Objects.requireNonNull(uuid, "UUID must not be null");
@@ -28,8 +28,6 @@ public class Resume {
         this.fullName = fullName;
     }
 
-
-
     public String getUuid() {
         return uuid;
     }
@@ -38,17 +36,45 @@ public class Resume {
         return fullName;
     }
 
-    public void addContact(Contact contact) {
-        contacts.add(contact);
+    public void getContact(ContactType contactType) {
+        contacts.get(contactType);
     }
 
-    public void addSection(Section section) {
-        sections.add(section);
+    public void getSection(SectionType sectionType) {
+        sections.get(sectionType);
+    }
+
+    public void addContact(Contact contact) {
+        Objects.requireNonNull(contact, "Contact must not be null");
+        contacts.put(contact.getType(), contact);
+    }
+
+    public void addSection(SectionType type, Section section) {
+        Objects.requireNonNull(section, "Section must not be null");
+        Objects.requireNonNull(type, "SectionType must not be null");
+        sections.put(type, section);
+    }
+
+    public void prtResume() {
+        System.out.println(uuid);
+        System.out.println(fullName);
+        for (Map.Entry<ContactType, Contact> contact : contacts.entrySet()) {
+            System.out.println(contact.getValue());
+        }
+        for (Map.Entry<SectionType, Section> section : sections.entrySet()) {
+            System.out.println(section.getKey().getTitle());
+            System.out.println(section.getValue());
+        }
     }
 
     @Override
     public String toString() {
-        return "uuid: " + uuid + ", " + "full_name: " + fullName;
+        return "Resume{" +
+               "uuid='" + uuid + '\'' +
+               ", fullName='" + fullName + '\'' +
+               ", contacts=" + contacts +
+               ", sections=" + sections +
+               '}';
     }
 
     @Override

@@ -1,22 +1,27 @@
 package com.topjava.webapp.model;
 
+import java.util.Objects;
+
 public class Contact {
-    private String type;
-    private String body;
-    private String link;
+    private final ContactType type;
+    private final String link;
 
-    public Contact(String body) {
-        this.body = body;
-    }
-
-    public Contact(String type, String body) {
+    public Contact(ContactType type, String link) {
+        Objects.requireNonNull(type, "Contact type must not be null");
         this.type = type;
-        this.body = body;
-    }
-
-    public Contact(String type, String body, String link) {
-        this.type = type;
-        this.body = body;
         this.link = link;
+    }
+
+    public ContactType getType() {
+        return type;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    @Override
+    public String toString() {
+        return type + ", " + link;
     }
 }
