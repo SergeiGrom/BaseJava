@@ -103,11 +103,11 @@ public class ResumeTestData {
 
     private static List<Company> fillExperience() {
         Company javaOnlineProjects = new Company("Java Online Projects", "http://javaops.ru/");
-        Company.Activity aaa = new Company.Activity("Автор проекта", "10/2013", "СЕЙЧАС",
+        Company.Period aaa = new Company.Period("Автор проекта", "10/2013", "СЕЙЧАС",
                 "Создание, организация и проведение Java онлайн проектов и стажировок.");
-        javaOnlineProjects.addActivity(aaa);
+        javaOnlineProjects.addPeriod(aaa);
         Company wrike = new Company("Wrike", "https://www.wrike.com/");
-        wrike.addActivity(new Company.Activity("Старший разработчик (backend)", "10/2014", "01/2016",
+        wrike.addPeriod(new Company.Period("Старший разработчик (backend)", "10/2014", "01/2016",
                 "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis," +
                 " Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."));
         List<Company> companies = new ArrayList<>();
@@ -119,10 +119,10 @@ public class ResumeTestData {
     private static List<Company> fillEducation() {
         Company ifmo = new Company("Санкт-Петербургский национальный исследовательский университет информационных " +
                                    "технологий, механики и оптики", "http://www.ifmo.ru/");
-        ifmo.addActivity(new Company.Activity("Аспирантура (программист С, С++)", "09/1993", "07/1996", null));
-        ifmo.addActivity(new Company.Activity("Инженер (программист Fortran, C)", "09/1987", "07/1993", null));
+        ifmo.addPeriod(new Company.Period("Аспирантура (программист С, С++)", "09/1993", "07/1996", null));
+        ifmo.addPeriod(new Company.Period("Инженер (программист Fortran, C)", "09/1987", "07/1993", null));
         Company mipt = new Company("Заочная физико-техническая школа при МФТИ", "https://mipt.ru/");
-        mipt.addActivity(new Company.Activity("Закончил с отличием", "09/1984", "06/1987", null));
+        mipt.addPeriod(new Company.Period("Закончил с отличием", "09/1984", "06/1987", null));
         List<Company> companies = new ArrayList<>();
         companies.add(ifmo);
         companies.add(mipt);

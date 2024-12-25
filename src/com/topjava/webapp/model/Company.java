@@ -1,32 +1,33 @@
 package com.topjava.webapp.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Company {
-    String header;
-    String businessLink;
-    List<Activity> activities = new ArrayList<>();
+    private final Link homePage;
+    private List<Period> periods = new ArrayList<>();
 
-    public Company(String header, String businessLink) {
-        Objects.requireNonNull(header, "Company name must not be null");
-        this.header = header;
-        this.businessLink = businessLink;
+    public Company(String name, String website) {
+        Objects.requireNonNull(name, "Company name must not be null");
+        this.homePage = new Link(name, website);
     }
 
-    public void setActivities(List<Activity> activities) {
-        this.activities = activities;
+    public Link getHomePage() {
+        return homePage;
     }
 
-    public void addActivity(Activity activity) {
-        activities.add(activity);
+    public List<Period> getPeriods() {
+        return periods;
     }
 
-    @Override
-    public String toString() {
-        return header + ", " + businessLink +
-               activities.toString();
+    public void setPeriods(List<Period> periods) {
+        this.periods = periods;
+    }
+
+    public void addPeriod(Period period) {
+        periods.add(period);
     }
 
     @Override
@@ -35,32 +36,38 @@ public class Company {
         if (o == null || getClass() != o.getClass()) return false;
 
         Company company = (Company) o;
-        return header.equals(company.header) && Objects.equals(businessLink, company.businessLink) && activities.equals(company.activities);
+        return homePage.equals(company.homePage) && Objects.equals(periods, company.periods);
     }
 
     @Override
     public int hashCode() {
-        int result = header.hashCode();
-        result = 31 * result + Objects.hashCode(businessLink);
-        result = 31 * result + activities.hashCode();
+        int result = homePage.hashCode();
+        result = 31 * result + Objects.hashCode(periods);
         return result;
     }
 
-    public static class Activity {
-        String title;
-        String content;
-        // TODO: String period to Date;
-        String periodStart;
-        String periodEnd;
+    @Override
+    public String toString() {
+        return "Company{" +
+               "homePage=" + homePage +
+               ", periods=" + periods +
+               '}';
+    }
 
-        public Activity(String title, String periodStart, String periodEnd, String content) {
+    public static class Period {
+        private final String title;
+        private final String description;
+        private final LocalDate startDate;
+        private final LocalDate endDate;
+
+        public Period(String title, LocalDate startDate, LocalDate endDate, String description) {
             Objects.requireNonNull(title, "Title must not be null");
-            Objects.requireNonNull(periodStart, "PeriodStart must not be null");
-            Objects.requireNonNull(periodEnd, "PeriodEnd must not be null");
+            Objects.requireNonNull(startDate, "PeriodStart must not be null");
+            Objects.requireNonNull(endDate, "PeriodEnd must not be null");
             this.title = title;
-            this.periodStart = periodStart;
-            this.periodEnd = periodEnd;
-            this.content = content;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.description = description;
         }
 
         @Override
@@ -68,24 +75,24 @@ public class Company {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
-            Activity activity = (Activity) o;
-            return title.equals(activity.title) && Objects.equals(content, activity.content) && periodStart.equals(activity.periodStart) && periodEnd.equals(activity.periodEnd);
+            Period period = (Period) o;
+            return title.equals(period.title) && Objects.equals(description, period.description) && startDate.equals(period.startDate) && endDate.equals(period.endDate);
         }
 
         @Override
         public int hashCode() {
             int result = title.hashCode();
-            result = 31 * result + Objects.hashCode(content);
-            result = 31 * result + periodStart.hashCode();
-            result = 31 * result + periodEnd.hashCode();
+            result = 31 * result + Objects.hashCode(description);
+            result = 31 * result + startDate.hashCode();
+            result = 31 * result + endDate.hashCode();
             return result;
         }
 
         @Override
         public String toString() {
-            return periodStart + " - " + periodEnd +
+            return startDate + " - " + endDate +
                    ", " + title + "\n" +
-                   content;
+                   description;
         }
     }
 }
