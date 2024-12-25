@@ -1,6 +1,7 @@
 package com.topjava.webapp;
 
 import com.topjava.webapp.model.*;
+import com.topjava.webapp.util.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,11 +104,10 @@ public class ResumeTestData {
 
     private static List<Company> fillExperience() {
         Company javaOnlineProjects = new Company("Java Online Projects", "http://javaops.ru/");
-        Company.Period aaa = new Company.Period("Автор проекта", "10/2013", "СЕЙЧАС",
-                "Создание, организация и проведение Java онлайн проектов и стажировок.");
-        javaOnlineProjects.addPeriod(aaa);
+        javaOnlineProjects.addPeriod(new Company.Period("Автор проекта", DateUtil.of(2015,10), DateUtil.of(11111,1),
+                "Создание, организация и проведение Java онлайн проектов и стажировок."));
         Company wrike = new Company("Wrike", "https://www.wrike.com/");
-        wrike.addPeriod(new Company.Period("Старший разработчик (backend)", "10/2014", "01/2016",
+        wrike.addPeriod(new Company.Period("Старший разработчик (backend)", DateUtil.of(2014,10), DateUtil.of(2016,1),
                 "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis," +
                 " Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."));
         List<Company> companies = new ArrayList<>();
@@ -119,13 +119,14 @@ public class ResumeTestData {
     private static List<Company> fillEducation() {
         Company ifmo = new Company("Санкт-Петербургский национальный исследовательский университет информационных " +
                                    "технологий, механики и оптики", "http://www.ifmo.ru/");
-        ifmo.addPeriod(new Company.Period("Аспирантура (программист С, С++)", "09/1993", "07/1996", null));
-        ifmo.addPeriod(new Company.Period("Инженер (программист Fortran, C)", "09/1987", "07/1993", null));
+        ifmo.addPeriod(new Company.Period("Аспирантура (программист С, С++)", DateUtil.of(1993,9), DateUtil.of(1996,7), null));
+        ifmo.addPeriod(new Company.Period("Инженер (программист Fortran, C)", DateUtil.of(1987,9), DateUtil.of(1993,7), null));
         Company mipt = new Company("Заочная физико-техническая школа при МФТИ", "https://mipt.ru/");
-        mipt.addPeriod(new Company.Period("Закончил с отличием", "09/1984", "06/1987", null));
+        mipt.addPeriod(new Company.Period("Закончил с отличием", DateUtil.of(1984,9), DateUtil.of(1987,6), null));
         List<Company> companies = new ArrayList<>();
         companies.add(ifmo);
         companies.add(mipt);
         return companies;
+
     }
 }
