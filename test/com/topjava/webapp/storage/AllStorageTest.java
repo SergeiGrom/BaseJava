@@ -1,5 +1,6 @@
 package com.topjava.webapp.storage;
 
+import com.topjava.webapp.ResumeTestData;
 import com.topjava.webapp.exception.ExistStorageException;
 import com.topjava.webapp.exception.NotExistStorageException;
 import com.topjava.webapp.model.Resume;
@@ -23,10 +24,10 @@ public class AllStorageTest {
 
     //    introduce static block for education
     static {
-        RESUME_1 = new Resume("uuid1", "A");
-        RESUME_2 = new Resume("uuid2", "B");
-        RESUME_3 = new Resume("uuid3", "C");
-        RESUME_4 = new Resume("uuid4", "A");
+        RESUME_1 = ResumeTestData.fillResume("uuid1", "A");
+        RESUME_2 = ResumeTestData.fillResume("uuid2", "B");
+        RESUME_3 = ResumeTestData.fillResume("uuid3", "C");
+        RESUME_4 = ResumeTestData.fillResume("uuid4", "A");
     }
 
     @Before

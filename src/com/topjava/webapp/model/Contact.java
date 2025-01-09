@@ -22,6 +22,6 @@ public class Contact {
 
     @Override
     public String toString() {
-        return type + ", " + link;
+        return type + " " + link;
     }
 }

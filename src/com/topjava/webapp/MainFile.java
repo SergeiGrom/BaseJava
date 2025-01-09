@@ -13,7 +13,7 @@ public class MainFile {
             throw new RuntimeException("Error", e);
         }
 
-        File dir = new File(".\\src\\com\\topjava\\webapp");
+        File dir = new File("C:\\IdeaProjects\\BaseJava");
         try {
             System.out.println(dir.getCanonicalPath());
         } catch (IOException e) {
@@ -32,5 +32,26 @@ public class MainFile {
         } catch (IOException e) {
             throw new RuntimeException("Error", e);
         }
+
+//        Lesson_8 HW task Recursion
+        System.out.println("\nRecursion");
+        dirList(dir);
+    }
+
+    private static void dirList(File dir) {
+        File[] files = dir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (!file.isDirectory()) {
+                    System.out.println("\t" + file.getName());
+                } else {
+                    System.out.println(file.getName());
+                    dirList(file);
+
+                }
+            }
+        }
     }
 }
+
+

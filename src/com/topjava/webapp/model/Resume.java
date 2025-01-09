@@ -21,8 +21,8 @@ public class Resume {
 
     public Resume(String fullName) {
         Objects.requireNonNull(fullName, "Full_Name must not be null");
-        this.uuid = UUID.randomUUID().toString();
         this.fullName = fullName;
+        this.uuid = UUID.randomUUID().toString();
     }
 
     public String getUuid() {
@@ -52,26 +52,12 @@ public class Resume {
         sections.put(type, section);
     }
 
-    public void prtResume() {
-        System.out.println(uuid);
-        System.out.println(fullName);
-        for (Map.Entry<ContactType, Contact> contact : contacts.entrySet()) {
-            System.out.println(contact.getValue());
-        }
-        for (Map.Entry<SectionType, Section> section : sections.entrySet()) {
-            System.out.println(section.getKey().getTitle());
-            System.out.println(section.getValue());
-        }
-    }
-
     @Override
     public String toString() {
-        return "Resume{" +
-               "uuid='" + uuid + '\'' +
-               ", fullName='" + fullName + '\'' +
-               ", contacts=" + contacts +
-               ", sections=" + sections +
-               '}';
+        return uuid + '\n' +
+               fullName + '\n' +
+               contacts.values() + '\n' +
+               sections.values();
     }
 
     @Override
