@@ -5,6 +5,7 @@ import com.topjava.webapp.model.Resume;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +25,15 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> getAll() {
-        return List.of();
+        File[] files = directory.listFiles();
+        if (files == null) {
+            throw new StorageException("Read error", null);
+        }
+        List<Resume> resumes = new ArrayList<>(files.length);
+        for (File file : files) {
+            resumes.add(getResume(file));
+        }
+        return resumes;
     }
 
     @Override
