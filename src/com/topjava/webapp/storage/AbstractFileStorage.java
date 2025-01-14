@@ -29,12 +29,20 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void updateResume(File file, Resume resume) {
-
+        try {
+            writeResume(file, resume);
+        } catch (IOException e) {
+            throw new StorageException("Save error", file.getName());
+        }
     }
 
     @Override
     protected Resume getResume(File file) {
-        return null;
+        try {
+            return readResume(file);
+        } catch (IOException e) {
+            throw new StorageException("Read error", file.getName(), e);
+        }
     }
 
     @Override
@@ -43,17 +51,15 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
             file.createNewFile();
             writeResume(file, resume);
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("Save error", file.getName(), e);
         }
-    }
-
-    private void writeResume(File file, Resume resume) {
-
     }
 
     @Override
     protected void deleteResume(File file) {
-
+        if (!file.delete()) {
+            throw new StorageException("Delete error", file.getName());
+        }
     }
 
     @Override
@@ -68,11 +74,17 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        return 0;
+        return Objects.requireNonNull(directory.listFiles(), "Read error").length;
     }
 
     @Override
     public void clear() {
-
+        for (File file : Objects.requireNonNull(directory.listFiles(), "Read error")) {
+            deleteResume(file);
+        }
     }
+
+    protected abstract void writeResume(File file, Resume resume) throws IOException;
+
+    protected abstract Resume readResume(File file) throws IOException;
 }
