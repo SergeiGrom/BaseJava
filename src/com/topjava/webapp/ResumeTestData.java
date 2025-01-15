@@ -1,8 +1,8 @@
 package com.topjava.webapp;
 
 import com.topjava.webapp.model.*;
-import com.topjava.webapp.util.DateUtil;
 
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,21 +131,17 @@ public class ResumeTestData {
     }
 
     private static List<Company> fillExperience() {
-        Company javaOnlineProjects = new Company("Java Online Projects", "http://javaops.ru/");
-        javaOnlineProjects.addPeriod(new Company.Period("Автор проекта",
-                DateUtil.of(2015, 10), DateUtil.of(11111, 1),
-                "Создание, организация и проведение Java онлайн проектов и стажировок."));
-        Company wrike = new Company("Wrike", "https://www.wrike.com/");
-        wrike.addPeriod(new Company.Period("Старший разработчик (backend)",
-                DateUtil.of(2014, 10), DateUtil.of(2016, 1),
-                """
-                        Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis,
-                        Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.
-                        """));
-        List<Company> companies = new ArrayList<>();
-        companies.add(javaOnlineProjects);
-        companies.add(wrike);
-        return companies;
+        Company javaOnlineProjects = new Company("Java Online Projects", "http://javaops.ru/",
+                new Company.Period(2015, Month.of(10), "Автор проекта",
+                        "Создание, организация и проведение Java онлайн проектов и стажировок."));
+        Company wrike = new Company("Wrike", "https://www.wrike.com/",
+                new Company.Period(2014, Month.of(10), 2016, Month.of(1),
+                        "Старший разработчик (backend)",
+                        """
+                                Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis,
+                                Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.
+                                """));
+        return List.of(javaOnlineProjects, wrike);
     }
 
     private static List<Company> fillEducation() {
@@ -153,19 +149,16 @@ public class ResumeTestData {
                 "Санкт-Петербургский национальный исследовательский университет информационных
                 технологий, механики и оптики"
                 """,
-                "http://www.ifmo.ru"
-        );
-        ifmo.addPeriod(new Company.Period("Аспирантура (программист С, С++)",
-                DateUtil.of(1993, 9), DateUtil.of(1996, 7), null));
-        ifmo.addPeriod(new Company.Period("Инженер (программист Fortran, C)",
-                DateUtil.of(1987, 9), DateUtil.of(1993, 7), null));
-        Company mipt = new Company("Заочная физико-техническая школа при МФТИ", "https://mipt.ru/");
-        mipt.addPeriod(new Company.Period("Закончил с отличием",
-                DateUtil.of(1984, 9), DateUtil.of(1987, 6), null));
-        List<Company> companies = new ArrayList<>();
-        companies.add(ifmo);
-        companies.add(mipt);
-        return companies;
+                "http://www.ifmo.ru",
+                new Company.Period(1993, Month.of(9), 1996, Month.of(7),
+                        "Аспирантура (программист С, С++)", null),
+                new Company.Period(1987, Month.of(9), 1993, Month.of(7),
+                        "Инженер (программист Fortran, C)", null));
+        Company mipt = new Company("Заочная физико-техническая школа при МФТИ", "https://mipt.ru/",
+                new Company.Period(1984, Month.of(9), 1987, Month.of(6),
+                        "Закончил с отличием", null));
+
+        return List.of(ifmo, mipt);
 
     }
 }
