@@ -1,17 +1,25 @@
 package com.topjava.webapp.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.Month;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import static com.topjava.webapp.util.DateUtil.NOW;
+import static com.topjava.webapp.util.DateUtil.of;
+
 public class Company {
     private final Link homePage;
-    private List<Period> periods = new ArrayList<>();
+    private final List<Period> periods;
 
-    public Company(String name, String website) {
-        Objects.requireNonNull(name, "Company name must not be null");
-        this.homePage = new Link(name, website);
+    public Company(String name, String website, Period... periods) {
+        this(new Link(name, website), Arrays.asList(periods));
+    }
+
+    public Company(Link homePage, List<Period> periods) {
+        this.homePage = homePage;
+        this.periods = periods;
     }
 
     public Link getHomePage() {
@@ -20,10 +28,6 @@ public class Company {
 
     public List<Period> getPeriods() {
         return periods;
-    }
-
-    public void setPeriods(List<Period> periods) {
-        this.periods = periods;
     }
 
     public void addPeriod(Period period) {
@@ -60,7 +64,15 @@ public class Company {
         private final LocalDate startDate;
         private final LocalDate endDate;
 
-        public Period(String title, LocalDate startDate, LocalDate endDate, String description) {
+        public Period(int startYear, Month startMonth, String title, String description) {
+            this(of(startYear, startMonth), NOW, title, description);
+        }
+
+        public Period(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
+            this(of(startYear, startMonth), of(endYear, endMonth), title, description);
+        }
+
+        public Period(LocalDate startDate, LocalDate endDate, String title, String description) {
             Objects.requireNonNull(title, "Title must not be null");
             Objects.requireNonNull(startDate, "PeriodStart must not be null");
             Objects.requireNonNull(endDate, "PeriodEnd must not be null");
