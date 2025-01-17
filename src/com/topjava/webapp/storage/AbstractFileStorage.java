@@ -92,7 +92,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         }
     }
 
-    protected abstract void writeResume(OutputStream file, Resume resume) throws IOException;
+    protected abstract void writeResume(OutputStream os, Resume resume) throws IOException;
 
-    protected abstract Resume readResume(InputStream file) throws IOException;
+    protected abstract Resume readResume(InputStream is) throws IOException;
 }

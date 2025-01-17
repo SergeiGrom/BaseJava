@@ -1,5 +1,6 @@
 package com.topjava.webapp.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
@@ -9,7 +10,8 @@ import java.util.Objects;
 import static com.topjava.webapp.util.DateUtil.NOW;
 import static com.topjava.webapp.util.DateUtil.of;
 
-public class Company {
+public class Company implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final Link homePage;
     private final List<Period> periods;
 
@@ -58,7 +60,7 @@ public class Company {
                '}';
     }
 
-    public static class Period {
+    public static class Period implements Serializable {
         private final String title;
         private final String description;
         private final LocalDate startDate;

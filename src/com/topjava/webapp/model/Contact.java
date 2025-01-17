@@ -1,8 +1,10 @@
 package com.topjava.webapp.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Contact {
+public class Contact implements Serializable {
+    private static final long serialVersionUID = 1L;
     private final ContactType type;
     private final String link;
 

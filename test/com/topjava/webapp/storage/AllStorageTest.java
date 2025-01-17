@@ -8,10 +8,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 public class AllStorageTest {
+    protected static final File STORAGE_DIR = new File("C:\\IdeaProjects\\BaseJava\\storage");
     Storage storage;
     static final Resume RESUME_1;
     static final Resume RESUME_2;
@@ -61,7 +65,7 @@ public class AllStorageTest {
     public void update() throws Exception {
         Resume resume = new Resume("uuid1", "A");
         storage.update(resume);
-        Assert.assertSame(storage.get(RESUME_1.getUuid()), resume);
+        assertEquals(resume, storage.get(RESUME_1.getUuid()));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -108,7 +112,7 @@ public class AllStorageTest {
     @Test
     public void getAllSorted() throws Exception {
         storage.save(RESUME_4);
-        Resume[] expected = new Resume[]{RESUME_1, RESUME_4, RESUME_2, RESUME_3, };
+        Resume[] expected = new Resume[]{RESUME_1, RESUME_4, RESUME_2, RESUME_3,};
         List<Resume> actual = storage.getAllSorted();
         Assert.assertArrayEquals(expected, actual.toArray());
     }
