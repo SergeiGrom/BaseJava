@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class MainFile {
+    static int counter = 0;
+
     public static void main(String[] args) {
         File filePath = new File(".\\.gitignore");
         try {
@@ -35,22 +37,26 @@ public class MainFile {
 
 //        Lesson_8 HW task Recursion
         System.out.println("\nRecursion");
-        dirList(dir);
+        System.out.println(dir);
+        prtDirList(dir);
     }
 
-    private static void dirList(File dir) {
+    private static void prtDirList(File dir) {
         File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {
-                if (!file.isDirectory()) {
-                    System.out.println("\t" + file.getName());
-                } else {
-                    System.out.println(file.getName());
-                    dirList(file);
-
+                System.out.println(prtTreeSeparator(counter) + file.getName());
+                if (file.isDirectory()) {
+                    counter++;
+                    prtDirList(file);
                 }
             }
+            counter = 0;
         }
+    }
+
+    private static StringBuilder prtTreeSeparator(int counter) {
+        return new StringBuilder().append("|   ".repeat(Math.max(0, counter))).append("├── ");
     }
 }
 
