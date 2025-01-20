@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
-    private File directory;
+    private final File directory;
 
     protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory name must not be null");
@@ -82,13 +82,20 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        return Objects.requireNonNull(directory.listFiles(), "Read error").length;
+        String[] dirList = directory.list();
+        if (dirList == null) {
+            throw new StorageException("Read error", null);
+        }
+        return dirList.length;
     }
 
     @Override
     public void clear() {
-        for (File file : Objects.requireNonNull(directory.listFiles(), "Read error")) {
-            deleteResume(file);
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                deleteResume(file);
+            }
         }
     }
 
