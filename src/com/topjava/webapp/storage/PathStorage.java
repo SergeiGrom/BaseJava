@@ -12,11 +12,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private final Path directory;
 
-    protected AbstractPathStorage(String dir) {
+    protected PathStorage(String dir) {
         directory = Paths.get(dir);
+        this.streamSerializer = new ObjectStreamSerializer();
         Objects.requireNonNull(dir, "directory name must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not a directory or is not readable/writable");
@@ -38,7 +39,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void updateResume(Path path, Resume resume) {
         try {
-            writeResume(new BufferedOutputStream(Files.newOutputStream(path)), resume);
+            streamSerializer.writeResume(new BufferedOutputStream(Files.newOutputStream(path)), resume);
         } catch (IOException e) {
             throw new StorageException(path + " WRITE ERROR", resume.getUuid(), e);
         }
@@ -47,7 +48,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume getResume(Path path) {
         try {
-            return readResume(new BufferedInputStream(Files.newInputStream(path)));
+            return streamSerializer.readResume(new BufferedInputStream(Files.newInputStream(path)));
         } catch (IOException e) {
             throw new StorageException(path + " READ ERROR", path.getFileName().toString(), e);
         }
@@ -57,7 +58,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     protected void saveResume(Path path, Resume resume) {
         try {
             Files.createFile(path);
-            writeResume(new BufferedOutputStream(Files.newOutputStream(path)), resume);
+            streamSerializer.writeResume(new BufferedOutputStream(Files.newOutputStream(path)), resume);
         } catch (IOException e) {
             throw new StorageException(path + " WRITE ERROR", resume.getUuid(), e);
         }
@@ -99,8 +100,4 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
             throw new StorageException(directory + " READ ERROR", null);
         }
     }
-
-    protected abstract void writeResume(OutputStream os, Resume resume) throws IOException;
-
-    protected abstract Resume readResume(InputStream is) throws IOException;
 }

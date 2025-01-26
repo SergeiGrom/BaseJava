@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 public abstract class AbstractStorage<SK> implements Storage {
     //    protected final Logger LOG = Logger.getLogger(getClass().getName());
     private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
+    protected StreamSerializer streamSerializer;
 
     public final Comparator<Resume> RESUME_COMPARATOR = Comparator
             .comparing(Resume::getFullName)
