@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class MainFile {
-    static int counter = 0;
+    private static int counter = 0;
 
     public static void main(String[] args) {
         File filePath = new File(".\\.gitignore");
@@ -35,7 +35,7 @@ public class MainFile {
             throw new RuntimeException("Error", e);
         }
 
-//        Lesson_8 HW task Recursion
+        // Lesson_8 HW task Recursion
         System.out.println("\nRecursion");
         System.out.println(dir);
         prtDirList(dir);
