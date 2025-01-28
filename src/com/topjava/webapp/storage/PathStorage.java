@@ -17,7 +17,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
     protected PathStorage(String dir) {
         directory = Paths.get(dir);
-        this.streamSerializer = new ObjectStreamSerializer();
+        this.streamSerializer = new ObjectStreamSerializerStrategy();
         Objects.requireNonNull(dir, "directory name must not be null");
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + " is not a directory or is not readable/writable");
@@ -26,14 +26,9 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected List<Resume> getAll() {
-        try (Stream<Path> files = Files.list(directory)) {
-            return files
-                    .filter(Files::isRegularFile)
-                    .map(this::getResume)
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            throw new StorageException(directory + " READ ERROR", null, e);
-        }
+        return listFiles().filter(Files::isRegularFile)
+                .map(this::getResume)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -58,10 +53,10 @@ public class PathStorage extends AbstractStorage<Path> {
     protected void saveResume(Path path, Resume resume) {
         try {
             Files.createFile(path);
-            streamSerializer.writeResume(new BufferedOutputStream(Files.newOutputStream(path)), resume);
         } catch (IOException e) {
-            throw new StorageException(path + " WRITE ERROR", resume.getUuid(), e);
+            throw new StorageException(path + " WRITE ERROR", null, e);
         }
+        updateResume(path, resume);
     }
 
     @Override
@@ -85,17 +80,17 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     public int size() {
-        try (Stream<Path> files = Files.list(directory)) {
-            return (int) files.count();
-        } catch (IOException e) {
-            throw new StorageException(directory + " READ ERROR", null, e);
-        }
+        return (int) listFiles().count();
     }
 
     @Override
     public void clear() {
-        try (Stream<Path> files = Files.list(directory)) {
-            files.forEach(this::deleteResume);
+        listFiles().forEach(this::deleteResume);
+    }
+
+    private Stream<Path> listFiles() {
+        try {
+            return Files.list(directory);
         } catch (IOException e) {
             throw new StorageException(directory + " READ ERROR", null);
         }

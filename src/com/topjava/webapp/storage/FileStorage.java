@@ -5,8 +5,10 @@ import com.topjava.webapp.model.Resume;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
@@ -20,20 +22,12 @@ public class FileStorage extends AbstractStorage<File> {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
         }
         this.directory = directory;
-        this.streamSerializer = new ObjectStreamSerializer();
+        this.streamSerializer = new ObjectStreamSerializerStrategy();
     }
 
     @Override
     protected List<Resume> getAll() {
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("Read error", null);
-        }
-        List<Resume> resumes = new ArrayList<>(files.length);
-        for (File file : files) {
-            resumes.add(getResume(file));
-        }
-        return resumes;
+        return Arrays.stream(listFiles()).map(this::getResume).collect(Collectors.toCollection(() -> new ArrayList<>(size())));
     }
 
     @Override
@@ -41,7 +35,7 @@ public class FileStorage extends AbstractStorage<File> {
         try {
             streamSerializer.writeResume(new FileOutputStream(file), resume);
         } catch (IOException e) {
-            throw new StorageException("Save error", file.getName());
+            throw new StorageException("WRITE ERROR", file.getName());
         }
     }
 
@@ -50,7 +44,7 @@ public class FileStorage extends AbstractStorage<File> {
         try {
             return streamSerializer.readResume(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
-            throw new StorageException("Read error", file.getName(), e);
+            throw new StorageException("READ ERROR", file.getName(), e);
         }
     }
 
@@ -58,16 +52,16 @@ public class FileStorage extends AbstractStorage<File> {
     protected void saveResume(File file, Resume resume) {
         try {
             file.createNewFile();
-            streamSerializer.writeResume(new BufferedOutputStream(new FileOutputStream(file)), resume);
         } catch (IOException e) {
-            throw new StorageException("Save error", file.getName(), e);
+            throw new StorageException("WRITE ERROR", file.getName(), e);
         }
+        updateResume(file, resume);
     }
 
     @Override
     protected void deleteResume(File file) {
         if (!file.delete()) {
-            throw new StorageException("Delete error", file.getName());
+            throw new StorageException("DELETE ERROR", file.getName());
         }
     }
 
@@ -83,20 +77,19 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        String[] dirList = directory.list();
-        if (dirList == null) {
-            throw new StorageException("Read error", null);
-        }
-        return dirList.length;
+        return listFiles().length;
     }
 
     @Override
     public void clear() {
+        Arrays.stream(listFiles()).forEach(this::deleteResume);
+    }
+
+    private File[] listFiles() {
         File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                deleteResume(file);
-            }
+        if (files == null) {
+            throw new StorageException(directory + " READ ERROR", null);
         }
+        return files;
     }
 }
