@@ -2,9 +2,9 @@ package com.topjava.webapp.storage;
 
 import com.topjava.webapp.exception.StorageException;
 import com.topjava.webapp.model.Resume;
+import com.topjava.webapp.storage.serializer.StreamSerializer;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -12,9 +12,11 @@ import java.util.stream.Collectors;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
+    private final StreamSerializer streamSerializer;
 
-    protected FileStorage(File directory) {
+    protected FileStorage(File directory, StreamSerializer streamSerializer) {
         Objects.requireNonNull(directory, "directory name must not be null");
+        this.streamSerializer = streamSerializer;
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not a directory");
         }
@@ -22,12 +24,11 @@ public class FileStorage extends AbstractStorage<File> {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
         }
         this.directory = directory;
-        this.streamSerializer = new ObjectStreamSerializerStrategy();
     }
 
     @Override
     protected List<Resume> getAll() {
-        return Arrays.stream(listFiles()).map(this::getResume).collect(Collectors.toCollection(() -> new ArrayList<>(size())));
+        return Arrays.stream(listFiles()).map(this::getResume).collect(Collectors.toList());
     }
 
     @Override
