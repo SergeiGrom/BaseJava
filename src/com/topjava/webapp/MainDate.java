@@ -17,7 +17,7 @@ public class MainDate {
         System.out.println(date);
         System.out.println(System.currentTimeMillis() - startTime);
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeZone(TimeZone.getTimeZone("America/ Los_Angeles"));
+        calendar.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
         System.out.println(calendar.getTime());
 
         LocalDate ld = LocalDate.now();
