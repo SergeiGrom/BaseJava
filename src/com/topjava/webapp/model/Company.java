@@ -1,6 +1,6 @@
 package com.topjava.webapp.model;
 
-import com.topjava.webapp.util.LocalDateAdapter;
+import com.topjava.webapp.util.XmlUtil.XmlLocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -73,9 +73,9 @@ public class Company implements Serializable {
     public static class Period implements Serializable {
         private String title;
         private String description;
-        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        @XmlJavaTypeAdapter(XmlLocalDateAdapter.class)
         private LocalDate startDate;
-        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        @XmlJavaTypeAdapter(XmlLocalDateAdapter.class)
         private LocalDate endDate;
 
         public Period() {

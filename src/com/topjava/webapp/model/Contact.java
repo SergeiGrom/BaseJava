@@ -11,6 +11,9 @@ public class Contact implements Serializable {
     private ContactType type;
     private String link;
 
+    public Contact() {
+    }
+
     public Contact(ContactType type, String link) {
         Objects.requireNonNull(type, "Contact type must not be null");
         this.type = type;

@@ -1,4 +1,4 @@
-package com.topjava.webapp.util;
+package com.topjava.webapp.util.XmlUtil;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

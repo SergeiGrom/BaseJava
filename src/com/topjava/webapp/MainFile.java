@@ -46,7 +46,7 @@ public class MainFile {
             for (File file : files) {
                 System.out.println(separator + "├── " + file.getName());
                 if (file.isDirectory()) {
-                    prtDirList(file, separator  + "|   ");
+                    prtDirList(file, separator + "|   ");
                 }
             }
         }

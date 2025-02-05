@@ -1,7 +1,7 @@
 package com.topjava.webapp.storage.serializer;
 
 import com.topjava.webapp.model.*;
-import com.topjava.webapp.util.XmlParser;
+import com.topjava.webapp.util.XmlUtil.XmlParser;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
