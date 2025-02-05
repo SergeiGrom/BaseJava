@@ -63,9 +63,9 @@ public class AllStorageTest {
 
     @Test
     public void update() throws Exception {
-        Resume resume = new Resume("uuid1", "A");
-        storage.update(resume);
-        assertEquals(resume, storage.get(RESUME_1.getUuid()));
+        Resume newResume = ResumeTestData.fillResume("uuid1", "A");
+        storage.update(newResume);
+        assertEquals(newResume, storage.get(RESUME_1.getUuid()));
     }
 
     @Test(expected = NotExistStorageException.class)
