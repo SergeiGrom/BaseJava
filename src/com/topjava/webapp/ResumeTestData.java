@@ -18,12 +18,12 @@ public class ResumeTestData {
     public static Resume fillResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
         // fill Contacts
-        resume.addContact(new Contact(MOBILE_PHONE, "+7(921) 855-0482"));
-        resume.addContact(new Contact(SKYPE, "skype:grigory.kislin"));
-        resume.addContact(new Contact(LINKEDIN, "https://www.linkedin.com/in/gkislin"));
-        resume.addContact(new Contact(GITHUB, "https://github.com/gkislin"));
-        resume.addContact(new Contact(STACKOVERFLOW, "https://stackoverflow.com/users/548473"));
-        resume.addContact(new Contact(HOME_PAGE, "http://gkislin.ru/"));
+        resume.addContact(MOBILE_PHONE, "+7(921) 855-0482");
+        resume.addContact(SKYPE, "skype:grigory.kislin");
+        resume.addContact(LINKEDIN, "https://www.linkedin.com/in/gkislin");
+        resume.addContact(GITHUB, "https://github.com/gkislin");
+        resume.addContact(STACKOVERFLOW, "https://stackoverflow.com/users/548473");
+        resume.addContact(HOME_PAGE, "http://gkislin.ru/");
 
         // fill OBJECTIVE("Позиция")
         resume.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения " +
