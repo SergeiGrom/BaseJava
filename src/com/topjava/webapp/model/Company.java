@@ -99,6 +99,22 @@ public class Company implements Serializable {
             this.description = description;
         }
 
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public LocalDate getStartDate() {
+            return startDate;
+        }
+
+        public LocalDate getEndDate() {
+            return endDate;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
