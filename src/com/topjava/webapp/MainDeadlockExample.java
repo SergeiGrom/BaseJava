@@ -5,47 +5,34 @@ public class MainDeadlockExample {
     private static final Object SECOND_OBJ = new Object();
 
     public static void main(String[] args) {
-
-        class Deadlock implements Runnable{
-            @Override
-            public void run() {
-                doWrite();
-                doRead();
-            }
-        }
-
-        Deadlock process = new Deadlock();
-        Thread thread_1 = new Thread(process, "FIRST thread");
-        Thread thread_2 = new Thread(process, "SECOND thread");
-        thread_1.start();
-        thread_2.start();
+        deadLock(FIRST_OBJ, SECOND_OBJ);
+        deadLock(SECOND_OBJ, FIRST_OBJ);
     }
 
-    public static void doWrite() {
-        synchronized (FIRST_OBJ) {
-            System.out.println(Thread.currentThread().getName()
-                               + " - lock FIRST_OBJ");
-            synchronized (SECOND_OBJ) {
-                System.out.println(Thread.currentThread().getName()
-                                   + " - lock SECOND_OBJ");
-                System.out.println(Thread.currentThread().getName()
-                                   + " - process write");
+    private static void deadLock(Object obj_1, Object obj_2) {
+        new Thread(() -> {
+            String threadName = Thread.currentThread().getName();
+            System.out.println(threadName + " - waiting obj_1");
+            synchronized (obj_1) {
+                System.out.println(threadName + " - lock obj_1");
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println(threadName + " - waiting obj_2");
+                synchronized (obj_2) {
+                    System.out.println(threadName + " - lock obj_2");
+                }
             }
-        }
+        }).start();
     }
-
-    public static void doRead() {
-        synchronized (SECOND_OBJ) {
-            System.out.println(Thread.currentThread().getName()
-                               + " - lock SECOND_OBJ");
-            synchronized (FIRST_OBJ) {
-                System.out.println(Thread.currentThread().getName()
-                                   + " - lock FIRST_OBJ");
-                System.out.println(Thread.currentThread().getName()
-                                   + " - process read");
-            }
-        }
-    }
-
-
 }
+
+
+
+
+
+
+
+
