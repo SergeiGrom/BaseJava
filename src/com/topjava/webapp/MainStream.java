@@ -1,4 +1,4 @@
-package com.topjava.webapp.util;
+package com.topjava.webapp;
 
 import java.util.Arrays;
 import java.util.List;
