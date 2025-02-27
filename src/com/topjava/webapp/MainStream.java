@@ -10,12 +10,12 @@ public class MainStream {
     public static void main(String[] args) {
         int[] randInts = new Random().ints(10, 1, 10).toArray();
         System.out.println("Values: " + Arrays.toString(randInts).replaceAll("[\\[\\],]", ""));
-        System.out.println("MinValue: " + minvalue(randInts));
+        System.out.println("MinValue: " + minValue(randInts));
         System.out.println("Odd or Even: " + oddOrEven(Arrays.stream(randInts).boxed().toList())
                 .toString().replaceAll("[\\[\\],]", ""));
     }
 
-    private static int minvalue(int[] values) {
+    private static int minValue(int[] values) {
         int[] uniqueValues = Arrays.stream(values).distinct().sorted().toArray();
         int len = uniqueValues.length;
         return IntStream.range(0, len)
