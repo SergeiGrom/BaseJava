@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class MainStream {
     public static void main(String[] args) {
@@ -16,11 +15,7 @@ public class MainStream {
     }
 
     private static int minValue(int[] values) {
-        int[] uniqueValues = Arrays.stream(values).distinct().sorted().toArray();
-        int len = uniqueValues.length;
-        return IntStream.range(0, len)
-                .map(i ->uniqueValues[i] * (int) Math.pow(10, len - 1 - i))
-                .sum();
+        return Arrays.stream(values).distinct().sorted().reduce((x, y) -> x * 10 + y).orElse(0);
     }
 
     private static List<Integer> oddOrEven(List<Integer> integers) {
