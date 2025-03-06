@@ -1,5 +1,6 @@
 package com.topjava.webapp.storage;
 
+import com.topjava.webapp.Config;
 import com.topjava.webapp.ResumeTestData;
 import com.topjava.webapp.exception.ExistStorageException;
 import com.topjava.webapp.exception.NotExistStorageException;
@@ -15,7 +16,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class AllStorageTest {
-    protected static final File STORAGE_DIR = new File("C:\\IdeaProjects\\BaseJava\\storage");
+    public static final File STORAGE_DIR = Config.get().getStorageDir();
     Storage storage;
     static final Resume RESUME_1;
     static final Resume RESUME_2;
