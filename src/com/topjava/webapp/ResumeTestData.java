@@ -1,12 +1,11 @@
 package com.topjava.webapp;
 
-import com.topjava.webapp.model.*;
+import com.topjava.webapp.model.Company;
+import com.topjava.webapp.model.Resume;
 
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.topjava.webapp.model.ContactType.*;
 
 public class ResumeTestData {
 
@@ -17,6 +16,7 @@ public class ResumeTestData {
 
     public static Resume fillResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
+        /*
         // fill Contacts
         resume.addContact(MOBILE_PHONE, "+7(921) 855-0482");
         resume.addContact(SKYPE, "skype:grigory.kislin");
@@ -47,7 +47,7 @@ public class ResumeTestData {
         // fill EDUCATION("Образование")
         Section education = new CompanySection(fillEducation());
         resume.addSection(SectionType.EDUCATION, education);
-
+    */
         return resume;
     }
 

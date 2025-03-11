@@ -66,9 +66,11 @@ public class Resume implements Comparable<Resume>, Serializable {
     @Override
     public String toString() {
         return uuid + '\n' +
-               fullName + '\n' +
+               fullName + '\n'
+               /*+
                contacts.values() + '\n' +
-               sections.values();
+               sections.values()
+                */;
     }
 
     @Override
