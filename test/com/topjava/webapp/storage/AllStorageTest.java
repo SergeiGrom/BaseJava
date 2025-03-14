@@ -10,8 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -22,6 +21,10 @@ public class AllStorageTest {
     static final Resume RESUME_2;
     static final Resume RESUME_3;
     static final Resume RESUME_4;
+    static final String UUID_1 = String.valueOf(UUID.randomUUID());
+    static final String UUID_2 = String.valueOf(UUID.randomUUID());
+    static final String UUID_3 = String.valueOf(UUID.randomUUID());
+    static final String UUID_4 = String.valueOf(UUID.randomUUID());
 
     public AllStorageTest(Storage storage) {
         this.storage = storage;
@@ -29,10 +32,10 @@ public class AllStorageTest {
 
     //    introduce static block for education
     static {
-        RESUME_1 = ResumeTestData.fillResume("uuid1", "A");
-        RESUME_2 = ResumeTestData.fillResume("uuid2", "B");
-        RESUME_3 = ResumeTestData.fillResume("uuid3", "C");
-        RESUME_4 = ResumeTestData.fillResume("uuid4", "A");
+        RESUME_1 = ResumeTestData.fillResume(UUID_1, "A");
+        RESUME_2 = ResumeTestData.fillResume(UUID_2, "B");
+        RESUME_3 = ResumeTestData.fillResume(UUID_3, "C");
+        RESUME_4 = ResumeTestData.fillResume(UUID_4, "A");
     }
 
     @Before
@@ -64,7 +67,7 @@ public class AllStorageTest {
 
     @Test
     public void update() throws Exception {
-        Resume newResume = ResumeTestData.fillResume("uuid1", "A");
+        Resume newResume = ResumeTestData.fillResume(UUID_1, "A");
         storage.update(newResume);
         assertEquals(newResume, storage.get(RESUME_1.getUuid()));
     }
@@ -113,9 +116,10 @@ public class AllStorageTest {
     @Test
     public void getAllSorted() throws Exception {
         storage.save(RESUME_4);
-        Resume[] expected = new Resume[]{RESUME_1, RESUME_4, RESUME_2, RESUME_3,};
+        List<Resume> expected = Arrays.asList(RESUME_1, RESUME_2, RESUME_3, RESUME_4);
+        Collections.sort(expected);
         List<Resume> actual = storage.getAllSorted();
-        Assert.assertArrayEquals(expected, actual.toArray());
+        Assert.assertArrayEquals(expected.toArray(), actual.toArray());
     }
 
     protected void assertSize(int size) {
