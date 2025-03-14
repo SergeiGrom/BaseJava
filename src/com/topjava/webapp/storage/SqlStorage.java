@@ -1,9 +1,9 @@
 package com.topjava.webapp.storage;
 
 import com.topjava.webapp.exception.NotExistStorageException;
-import com.topjava.webapp.exception.StorageException;
 import com.topjava.webapp.model.Resume;
 import com.topjava.webapp.sql.ConnectionFactory;
+import com.topjava.webapp.sql.ExceptionCheck;
 import com.topjava.webapp.sql.SqlExecutor;
 
 import java.sql.*;
@@ -43,7 +43,9 @@ public class SqlStorage implements Storage {
             public Object execute(PreparedStatement ps) throws SQLException {
                 ps.setString(1, resume.getFullName());
                 ps.setString(2, resume.getUuid());
-                ps.executeUpdate();
+                if(ps.executeUpdate() == 0) {
+                    throw new NotExistStorageException(resume.getUuid());
+                }
                 return null;
             }
         });
@@ -114,7 +116,9 @@ public class SqlStorage implements Storage {
             @Override
             public Object execute(PreparedStatement ps) throws SQLException {
                 ps.setString(1, uuid);
-                ps.executeUpdate();
+                if(ps.executeUpdate() == 0) {
+                    throw new NotExistStorageException(uuid);
+                }
                 return null;
             }
         });
@@ -125,7 +129,7 @@ public class SqlStorage implements Storage {
              PreparedStatement ps = connection.prepareStatement(sqlCode)) {
             return executor.execute(ps);
         } catch (SQLException e) {
-            throw new StorageException(e);
+            throw ExceptionCheck.checkDuplicateKey(e);
         }
     }
 }
